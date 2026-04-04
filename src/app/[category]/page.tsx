@@ -3,14 +3,7 @@ import Link from 'next/link'
 import { getCategoryCounts, getPagesByCategory, getAllSlugs } from '@/lib/data'
 import { ArrowRight } from 'lucide-react'
 
-// Generate static routes for all valid categories
-export async function generateStaticParams() {
-  const counts = await getCategoryCounts()
-  const categories = Object.keys(counts)
-  return categories.map((c) => ({
-    category: c,
-  }))
-}
+export const dynamic = 'force-dynamic'
 
 export default async function CategoryPage({
   params,

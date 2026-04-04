@@ -1,69 +1,155 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Send, MapPin, Mail, Phone } from 'lucide-react'
 
-const footerLinks = {
-  services: [
-    { label: 'Web Development', href: '/services/web-development' },
-    { label: 'Mobile Apps', href: '/services/mobile-app-development' },
-    { label: 'AI Solutions', href: '/services/ai-development' },
-    { label: 'Cloud Computing', href: '/services/cloud-computing' },
-  ],
-  company: [
-    { label: 'About Us', href: '/about' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'Case Studies', href: '/case-studies' },
-    { label: 'Contact', href: '/contact' },
-  ],
-  resources: [
-    { label: 'Blog', href: '/blog' },
-    { label: 'Guides', href: '/guides' },
-    { label: 'Webinars', href: '/webinars' },
-    { label: 'FAQ', href: '/faq' },
-  ]
-}
+const serviceLinks = [
+  { label: 'Mobile App Development', href: '/services/mobile-app-development' },
+  { label: 'Web Development', href: '/services/web-development' },
+  { label: 'AI & Machine Learning', href: '/services/ai-development' },
+  { label: 'Blockchain & Web3', href: '/services/blockchain-development' },
+  { label: 'Cloud Architecture', href: '/services/cloud-computing' },
+  { label: 'UI/UX Design', href: '/services/ui-ux-design' },
+  { label: 'SaaS Development', href: '/services/saas-development' },
+  { label: 'IoT Solutions', href: '/services/iot-solutions' },
+  { label: 'AR/VR Development', href: '/services/ar-vr-development' },
+  { label: 'DevOps & CI/CD', href: '/services/devops-services' },
+]
+
+const companyLinks = [
+  { label: 'About Us', href: '/about' },
+  { label: 'Careers', href: '/careers' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Pricing', href: '/pricing' },
+]
+
+const industryLinks = [
+  { label: 'FinTech & Banking', href: '/industries/finance' },
+  { label: 'Healthcare', href: '/industries/healthcare' },
+  { label: 'E-Commerce', href: '/industries/retail' },
+  { label: 'Education', href: '/industries/education' },
+  { label: 'Logistics', href: '/industries/logistics' },
+  { label: 'Real Estate', href: '/industries/real-estate' },
+  { label: 'Automotive', href: '/industries/automotive' },
+  { label: 'Entertainment', href: '/industries/entertainment' },
+]
+
+const socialIcons = [
+  { name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in', href: '#' },
+  { name: 'Twitter', icon: 'fa-brands fa-x-twitter', href: '#' },
+  { name: 'Instagram', icon: 'fa-brands fa-instagram', href: '#' },
+  { name: 'GitHub', icon: 'fa-brands fa-github', href: '#' },
+  { name: 'Dribbble', icon: 'fa-brands fa-dribbble', href: '#' },
+]
 
 export default function Footer() {
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (email) {
+      setSubscribed(true)
+      setEmail('')
+      setTimeout(() => setSubscribed(false), 4000)
+    }
+  }
+
   return (
-    <footer className="bg-black pt-24 pb-12 border-t border-white/10 mt-auto">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 group mb-6 inline-flex">
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center">
+    <footer className="mt-auto" style={{ background: 'var(--bg-page)', borderTop: '1px solid var(--border-subtle)' }}>
+
+      {/* ─── Newsletter Bar ────────────────────────────────────────────── */}
+      <div className="py-12 border-b" style={{ background: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
+        <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-heading)' }}>
+              Stay ahead of the curve
+            </h3>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Get engineering insights, industry trends, and company updates delivered to your inbox.
+            </p>
+          </div>
+          <form onSubmit={handleSubscribe} className="flex items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 md:w-72">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                className="w-full h-11 pl-10 pr-4 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 transition-all"
+                style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }}
+              />
+            </div>
+            <button type="submit" className="glow-button px-6 py-2.5 text-sm shrink-0">
+              {subscribed ? '✓ Subscribed!' : 'Subscribe'}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* ─── Main Footer Grid ──────────────────────────────────────────── */}
+      <div className="max-w-[1400px] mx-auto px-6 pt-16 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+
+          {/* Col 1 — Brand */}
+          <div className="lg:col-span-4">
+            <Link href="/" className="flex items-center gap-2.5 mb-5 inline-flex">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'var(--gradient-hero)' }}>
                 <span className="text-white font-black text-lg">G</span>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
-                TheGetNow
+              <span className="text-lg font-black" style={{ color: 'var(--text-heading)' }}>
+                TheGet<span className="gradient-text">Now</span>
               </span>
             </Link>
-            <p className="text-zinc-400 max-w-sm mb-8 leading-relaxed">
-              Empowering businesses with next-generation digital solutions, AI integrations, and scalable architectures.
+            <p className="text-sm leading-relaxed mb-6 max-w-sm" style={{ color: 'var(--text-secondary)' }}>
+              We engineer world-class digital products for startups and Fortune 500 enterprises — from AI-powered platforms to blockchain protocols and cloud infrastructure.
             </p>
-            <div className="flex items-center gap-4">
-              {[
-                { name: 'Twitter', path: 'M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z' },
-                { name: 'Linkedin', path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z M4 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2z' },
-                { name: 'Github', path: 'M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22' },
-              ].map((icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-violet-500 hover:text-white transition-all">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                    <path d={icon.path} />
-                  </svg>
+
+            {/* Contact Info */}
+            <div className="space-y-3 mb-6">
+              <a href="mailto:hello@thegetnow.com" className="flex items-center gap-2.5 text-sm hover:text-[var(--color-primary)] transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                <Mail className="w-4 h-4 shrink-0" style={{ color: 'var(--color-primary)' }} />
+                hello@thegetnow.com
+              </a>
+              <a href="tel:+16284327890" className="flex items-center gap-2.5 text-sm hover:text-[var(--color-primary)] transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                <Phone className="w-4 h-4 shrink-0" style={{ color: 'var(--color-primary)' }} />
+                +1 (628) 432-7890
+              </a>
+              <div className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                <MapPin className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--color-primary)' }} />
+                <span>One World Trade Center, Floor 85,<br />New York, NY 10007</span>
+              </div>
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-3">
+              {socialIcons.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  aria-label={social.name}
+                  className="w-10 h-10 rounded-full border flex items-center justify-center text-sm transition-all hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:scale-110"
+                  style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                >
+                  <i className={social.icon} />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-6">Services</h3>
-            <ul className="space-y-4">
-              {footerLinks.services.map((link) => (
+          {/* Col 2 — Services */}
+          <div className="lg:col-span-3">
+            <h3 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: 'var(--text-heading)' }}>Services</h3>
+            <ul className="space-y-3">
+              {serviceLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-400 hover:text-violet-400 transition-colors text-sm flex items-center gap-2 group">
+                  <Link href={link.href} className="text-sm flex items-center gap-1.5 group transition-colors hover:text-[var(--color-primary)]" style={{ color: 'var(--text-secondary)' }}>
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     {link.label}
                   </Link>
@@ -71,12 +157,14 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div>
-            <h3 className="text-white font-semibold mb-6">Company</h3>
-            <ul className="space-y-4">
-              {footerLinks.company.map((link) => (
+
+          {/* Col 3 — Company */}
+          <div className="lg:col-span-2">
+            <h3 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: 'var(--text-heading)' }}>Company</h3>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-400 hover:text-violet-400 transition-colors text-sm flex items-center gap-2 group">
+                  <Link href={link.href} className="text-sm flex items-center gap-1.5 group transition-colors hover:text-[var(--color-primary)]" style={{ color: 'var(--text-secondary)' }}>
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     {link.label}
                   </Link>
@@ -84,12 +172,14 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div>
-            <h3 className="text-white font-semibold mb-6">Resources</h3>
-            <ul className="space-y-4">
-              {footerLinks.resources.map((link) => (
+
+          {/* Col 4 — Industries */}
+          <div className="lg:col-span-3">
+            <h3 className="text-sm font-bold uppercase tracking-wider mb-5" style={{ color: 'var(--text-heading)' }}>Industries</h3>
+            <ul className="space-y-3">
+              {industryLinks.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-zinc-400 hover:text-violet-400 transition-colors text-sm flex items-center gap-2 group">
+                  <Link href={link.href} className="text-sm flex items-center gap-1.5 group transition-colors hover:text-[var(--color-primary)]" style={{ color: 'var(--text-secondary)' }}>
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     {link.label}
                   </Link>
@@ -99,13 +189,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-zinc-500 text-sm">
+        {/* ─── Bottom Bar ───────────────────────────────────────────────── */}
+        <div className="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderColor: 'var(--border-subtle)' }}>
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
             © {new Date().getFullYear()} TheGetNow. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm text-zinc-500">
-            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            Made with <span className="text-red-500">❤️</span> in India
+          </p>
+          <div className="flex items-center gap-5 text-xs" style={{ color: 'var(--text-muted)' }}>
+            <Link href="/privacy-policy" className="hover:text-[var(--color-primary)] transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-[var(--color-primary)] transition-colors">Terms of Service</Link>
+            <Link href="/cookies" className="hover:text-[var(--color-primary)] transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>

@@ -1,0 +1,18 @@
+C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\node_modules\@supabase\supabase-js\src\lib\helpers.ts:86
+    throw new Error('supabaseUrl is required.')
+          ^
+
+
+Error: supabaseUrl is required.
+    at validateSupabaseUrl (C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\node_modules\@supabase\supabase-js\src\lib\helpers.ts:86:11)
+    at new SupabaseClient (C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\node_modules\@supabase\supabase-js\src\SupabaseClient.ts:284:21)
+    at createClient (C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\node_modules\@supabase\supabase-js\src\index.ts:60:10)
+    at <anonymous> (C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\supabase\seed.ts:8:18)
+    at Object.<anonymous> (C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\supabase\seed.ts:403:27)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object.transformer (C:\Users\Mohammed Jasil c\OneDrive\Desktop\TheGetNow\node_modules\tsx\dist\register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+
+Node.js v22.17.1

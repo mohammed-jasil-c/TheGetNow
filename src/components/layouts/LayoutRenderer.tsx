@@ -5,8 +5,16 @@ import ShowcaseLayout from './ShowcaseLayout'
 import MagazineLayout from './MagazineLayout'
 import ComparisonLayout from './ComparisonLayout'
 import DashboardLayout from './DashboardLayout'
+import TimelineLayout from './TimelineLayout'
+import InteractiveLayout from './InteractiveLayout'
+import LandingLayout from './LandingLayout'
+import DocumentationLayout from './DocumentationLayout'
+import IndustriesLayout from './IndustriesLayout'
 
 export default function LayoutRenderer({ page }: { page: FullPage }) {
+  // Category-level overrides — always use premium layouts for specific categories
+  if (page.category === 'industries') return <IndustriesLayout page={page} />
+
   switch (page.layout_template) {
     case 'split':
       return <SplitLayout page={page} />
@@ -18,13 +26,17 @@ export default function LayoutRenderer({ page }: { page: FullPage }) {
       return <MagazineLayout page={page} />
     case 'comparison':
       return <ComparisonLayout page={page} />
-    case 'documentation':
-    case 'interactive':
-      return <SplitLayout page={page} /> // Fallback mapped logically
     case 'timeline':
+      return <TimelineLayout page={page} />
+    case 'interactive':
+      return <InteractiveLayout page={page} />
     case 'landing':
+      return <LandingLayout page={page} />
+    case 'documentation':
+      return <DocumentationLayout page={page} />
     case 'cinematic':
     default:
       return <CinematicLayout page={page} />
   }
 }
+

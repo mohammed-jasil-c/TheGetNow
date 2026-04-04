@@ -1,53 +1,46 @@
 import { notFound } from 'next/navigation'
-import { getPageBySlug, getAllSlugs, getCategoryCounts } from '@/lib/data'
-import LayoutRenderer from '@/components/layouts/LayoutRenderer'
+import { getPageData, dynamicPages } from '@/lib/data/pages'
+import DynamicHero from '@/components/dynamic/DynamicHero'
+import FeatureShowcase from '@/components/dynamic/FeatureShowcase'
+import CTASection from '@/components/home/CTASection'
 
-export async function generateStaticParams({
-  params: { category },
-}: {
-  params: { category: string }
-}) {
-  // Wait for the parent to generate categories, or get them if running standalone
-  const counts = await getCategoryCounts()
-  const validCategories = Object.keys(counts)
-  
-  // If category is somehow invalid at build time, return empty array
-  if (!validCategories.includes(category)) return []
-
-  // Get all slugs for this specific category to render Statically
-  const slugs = await getAllSlugs(category)
-  return slugs.map(({ slug }) => ({
-    slug,
+// Generate static params for all possible category/slugs during build time
+export function generateStaticParams() {
+  return dynamicPages.map((page) => ({
+    category: page.category,
+    slug: page.slug,
   }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ category: string; slug: string }>
-}) {
-  const { category, slug } = await params
-  const page = await getPageBySlug(category, slug)
-  
-  if (!page) return {}
-  
-  return {
-    title: page.meta_title || `${page.title} | TheGetNow`,
-    description: page.meta_description || page.description,
-  }
-}
+export default async function DynamicCategoryPage(props: { params: Promise<{ category: string, slug: string }> }) {
+  const params = await props.params;
+  const pageData = getPageData(params.category, params.slug)
 
-export default async function DynamicPage({
-  params,
-}: {
-  params: Promise<{ category: string; slug: string }>
-}) {
-  const { category, slug } = await params
-  const page = await getPageBySlug(category, slug)
-
-  if (!page) {
+  if (!pageData) {
     notFound()
   }
 
-  return <LayoutRenderer page={page} />
+  return (
+    <div className="min-h-screen theme-page relative">
+      <DynamicHero 
+        title={pageData.title}
+        subtitle={pageData.subtitle}
+        heroImage={pageData.heroImage}
+        gradientFrom={pageData.gradientFrom}
+        gradientTo={pageData.gradientTo}
+        techIcons={pageData.techIcons}
+        ctaText={pageData.ctaText}
+      />
+
+      <FeatureShowcase 
+        overview={pageData.overview}
+        features={pageData.features}
+        heroImage={pageData.heroImage}
+      />
+
+      {/* The CTA / Contact section requested for every page */}
+      <CTASection />
+      
+    </div>
+  )
 }
