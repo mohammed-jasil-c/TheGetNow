@@ -1,193 +1,176 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Send, Loader2, ArrowRight, Clock, MessageSquare, Shield, Globe2 } from 'lucide-react'
+import { FaEnvelope, FaPhone, FaLocationDot, FaArrowRight, FaCheck, FaLinkedinIn, FaXTwitter, FaInstagram, FaGithub } from 'react-icons/fa6'
+import ScrollReveal from '@/components/animations/ScrollReveal'
 
-const offices = [
-  { city: 'New York', address: 'One World Trade Center, Floor 85, New York, NY 10007', icon: '🇺🇸', timezone: 'EST (UTC-5)' },
-  { city: 'London', address: '30 St Mary Axe, London EC3A 8BF, United Kingdom', icon: '🇬🇧', timezone: 'GMT (UTC+0)' },
-  { city: 'Dubai', address: 'DIFC, Gate Village 8, Floor 15, Dubai, UAE', icon: '🇦🇪', timezone: 'GST (UTC+4)' },
-  { city: 'Gurugram', address: 'Cybercity, DLF Phase 3, Sector 24, Gurugram 122002', icon: '🇮🇳', timezone: 'IST (UTC+5:30)' },
+const contactInfo = [
+  { icon: FaEnvelope, label: 'Email Us', value: 'hello@thegetnow.com', href: 'mailto:hello@thegetnow.com' },
+  { icon: FaPhone, label: 'Call Us', value: '+1 (628) 432-7890', href: 'tel:+16284327890' },
+  { icon: FaLocationDot, label: 'Visit Us', value: 'One World Trade Center, Floor 85, New York, NY 10007', href: '#' },
+]
+
+const socials = [
+  { name: 'LinkedIn', icon: FaLinkedinIn, href: '#' },
+  { name: 'Twitter', icon: FaXTwitter, href: '#' },
+  { name: 'Instagram', icon: FaInstagram, href: '#' },
+  { name: 'GitHub', icon: FaGithub, href: '#' },
 ]
 
 export default function ContactPage() {
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '', email: '', phone: '', company: '', budget: '', service: '', message: '',
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 5000)
-    }, 1500)
+    setSubmitted(true)
+  }
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: 'var(--color-bg)' }}>
+        <div className="text-center max-w-xl">
+          <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.15)' }}>
+            <FaCheck className="w-8 h-8 text-emerald-500" />
+          </div>
+          <h1 className="text-4xl font-extrabold mb-4 font-heading" style={{ color: 'var(--color-text)' }}>
+            Message Received!
+          </h1>
+          <p className="text-lg mb-8" style={{ color: 'var(--color-text-secondary)' }}>
+            Our solution architects will review your requirements and respond within 24 hours.
+          </p>
+          <Link href="/" className="glow-button">Back to Home <FaArrowRight className="w-4 h-4" /></Link>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
-
+    <div className="min-h-screen" style={{ background: 'var(--color-bg)' }}>
       {/* Hero */}
-      <section className="py-32 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--gradient-glow)' }} />
-        <div className="relative z-10 max-w-4xl mx-auto px-6">
-          <p className="section-label">Contact Us</p>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6" style={{ color: 'var(--text-heading)', fontFamily: 'var(--font-heading)' }}>
-            Let&apos;s build something <span className="gradient-text-hero">extraordinary.</span>
-          </h1>
-          <p className="text-xl max-w-2xl mx-auto mb-8" style={{ color: 'var(--text-secondary)' }}>
-            Have a project in mind? Our solution architects will analyze your requirements and provide a detailed proposal within 48 hours.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm" style={{ color: 'var(--text-muted)' }}>
-            <div className="flex items-center gap-2"><Clock className="w-4 h-4" style={{ color: 'var(--color-primary)' }} /> Response in &lt;2 hours</div>
-            <div className="flex items-center gap-2"><Shield className="w-4 h-4" style={{ color: 'var(--color-primary)' }} /> NDA on request</div>
-            <div className="flex items-center gap-2"><Globe2 className="w-4 h-4" style={{ color: 'var(--color-primary)' }} /> Global team, any timezone</div>
+      <section className="pt-32 pb-16 px-6 max-w-4xl mx-auto text-center">
+        <p className="section-label mb-4">Contact Us</p>
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6 font-heading" style={{ color: 'var(--color-text)' }}>
+          Let&apos;s build <span className="gradient-text">together.</span>
+        </h1>
+        <p className="text-lg" style={{ color: 'var(--color-text-secondary)' }}>
+          Get a free consultation and project estimate within 48 hours.
+        </p>
+      </section>
+
+      {/* Split Layout */}
+      <section className="max-w-[1400px] mx-auto px-6 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
+          {/* Left — Contact Info */}
+          <div className="lg:col-span-2 space-y-8">
+            {contactInfo.map((c, i) => (
+              <ScrollReveal key={i} delay={i * 0.1}>
+                <a href={c.href} className="enterprise-card rounded-2xl p-6 flex items-start gap-4 hover:border-[var(--color-primary)] transition-colors block">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(0,87,255,0.12)' }}>
+                    <c.icon className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted)' }}>{c.label}</p>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>{c.value}</p>
+                  </div>
+                </a>
+              </ScrollReveal>
+            ))}
+
+            {/* Map placeholder */}
+            <div className="rounded-2xl overflow-hidden h-48 border" style={{ borderColor: 'var(--color-border)' }}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.084813474439!2d-74.01369518459614!3d40.71277047933024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a197c06b7cb%3A0x7849fcded47d86a2!2sOne%20World%20Trade%20Center!5e0!3m2!1sen!2sus!4v1640000000000!5m2!1sen!2sus"
+                width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade" title="Office Location"
+              />
+            </div>
+
+            {/* Social */}
+            <div className="flex items-center gap-3">
+              {socials.map(s => (
+                <a key={s.name} href={s.href} aria-label={s.name} className="w-10 h-10 rounded-full border flex items-center justify-center transition-all hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]" style={{ borderColor: 'var(--color-border)', color: 'var(--color-muted)' }}>
+                  <s.icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — Form */}
+          <div className="lg:col-span-3">
+            <form onSubmit={handleSubmit} className="enterprise-card rounded-3xl p-8 lg:p-10 space-y-6">
+              <h2 className="text-2xl font-bold mb-2 font-heading" style={{ color: 'var(--color-text)' }}>Request a Consultation</h2>
+              <p className="text-sm mb-6" style={{ color: 'var(--color-muted)' }}>Fill out the form and we&apos;ll get back to you within 24 hours.</p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Full Name *</label>
+                  <input name="name" value={formData.name} onChange={handleChange} required className="form-input" placeholder="John Doe" />
+                </div>
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Work Email *</label>
+                  <input name="email" type="email" value={formData.email} onChange={handleChange} required className="form-input" placeholder="john@company.com" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Phone</label>
+                  <input name="phone" value={formData.phone} onChange={handleChange} className="form-input" placeholder="+1 (628) 432-7890" />
+                </div>
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Company</label>
+                  <input name="company" value={formData.company} onChange={handleChange} className="form-input" placeholder="Company Inc." />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Service Required *</label>
+                  <select name="service" value={formData.service} onChange={handleChange} required className="form-input" style={{ appearance: 'revert' }}>
+                    <option value="">Select a service</option>
+                    <option value="web">Web Development</option>
+                    <option value="mobile">Mobile Development</option>
+                    <option value="ai">AI & Machine Learning</option>
+                    <option value="blockchain">Blockchain</option>
+                    <option value="cloud">Cloud Architecture</option>
+                    <option value="design">UI/UX Design</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Budget Range</label>
+                  <select name="budget" value={formData.budget} onChange={handleChange} className="form-input" style={{ appearance: 'revert' }}>
+                    <option value="">Select budget</option>
+                    <option value="10k-25k">$10K - $25K</option>
+                    <option value="25k-50k">$25K - $50K</option>
+                    <option value="50k-100k">$50K - $100K</option>
+                    <option value="100k-250k">$100K - $250K</option>
+                    <option value="250k+">$250K+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--color-text-secondary)' }}>Project Description *</label>
+                <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className="form-textarea" placeholder="Tell us about your project, goals, and timeline..." />
+              </div>
+
+              <button type="submit" className="glow-button w-full justify-center text-base py-4">
+                Send Request <FaArrowRight className="w-4 h-4" />
+              </button>
+            </form>
           </div>
         </div>
       </section>
-
-      <div className="max-w-[1400px] mx-auto px-6 pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-          {/* Left: Contact Info */}
-          <div className="space-y-6">
-
-            {/* Quick Contact */}
-            <div className="enterprise-card p-8 rounded-3xl">
-              <h2 className="text-2xl font-extrabold mb-6" style={{ color: 'var(--text-heading)' }}>Quick Contact</h2>
-              <div className="space-y-4">
-                <a href="mailto:hello@thegetnow.com" className="flex items-center gap-4 p-4 rounded-2xl transition-colors group" style={{ background: 'var(--bg-surface)' }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0, 87, 255, 0.12)' }}>
-                    <Mail className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>Email</p>
-                    <p className="font-bold group-hover:text-[var(--color-primary)] transition-colors" style={{ color: 'var(--text-heading)' }}>hello@thegetnow.com</p>
-                  </div>
-                </a>
-                <a href="tel:+16284327890" className="flex items-center gap-4 p-4 rounded-2xl transition-colors group" style={{ background: 'var(--bg-surface)' }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0, 87, 255, 0.12)' }}>
-                    <Phone className="w-5 h-5" style={{ color: 'var(--color-primary)' }} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>Phone</p>
-                    <p className="font-bold group-hover:text-[var(--color-primary)] transition-colors" style={{ color: 'var(--text-heading)' }}>+1 (628) 432-7890</p>
-                  </div>
-                </a>
-                <a href="https://wa.me/919463407140" target="_blank" rel="noopener" className="flex items-center gap-4 p-4 rounded-2xl transition-colors group" style={{ background: 'var(--bg-surface)' }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#25D366]/12">
-                    <MessageSquare className="w-5 h-5 text-[#25D366]" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold mb-0.5" style={{ color: 'var(--text-muted)' }}>WhatsApp</p>
-                    <p className="font-bold group-hover:text-[#25D366] transition-colors" style={{ color: 'var(--text-heading)' }}>Chat with us instantly</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/* Enterprise Support */}
-            <div className="enterprise-card p-8 rounded-3xl">
-              <h3 className="text-lg font-bold mb-3" style={{ color: 'var(--text-heading)' }}>Enterprise Support</h3>
-              <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
-                Existing enterprise client? Contact your dedicated account manager or use the support portal for prioritized routing.
-              </p>
-              <a href="#" className="text-sm font-bold flex items-center gap-1" style={{ color: 'var(--color-primary)' }}>
-                Access Support Portal <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-
-          {/* Right: Form */}
-          <div className="enterprise-card p-8 md:p-10 rounded-3xl">
-            <h2 className="text-2xl font-extrabold mb-8" style={{ color: 'var(--text-heading)' }}>Start Your Project</h2>
-
-            {success ? (
-              <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6" style={{ background: 'rgba(16, 185, 129, 0.12)' }}>
-                  <Send className="w-10 h-10 text-emerald-500" />
-                </div>
-                <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-heading)' }}>Message Sent!</h3>
-                <p style={{ color: 'var(--text-muted)' }}>We&apos;ll get back to you within 2 hours.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--text-muted)' }}>First Name</label>
-                    <input required type="text" placeholder="John" className="w-full h-12 px-4 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 transition-all" style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }} />
-                  </div>
-                  <div>
-                    <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--text-muted)' }}>Last Name</label>
-                    <input required type="text" placeholder="Doe" className="w-full h-12 px-4 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 transition-all" style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }} />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--text-muted)' }}>Email Address</label>
-                  <input required type="email" placeholder="john@company.com" className="w-full h-12 px-4 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 transition-all" style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }} />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--text-muted)' }}>Budget Range</label>
-                    <select className="w-full h-12 px-4 rounded-xl text-sm focus:outline-none appearance-none" style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }}>
-                      <option>$5K – $15K</option>
-                      <option>$15K – $50K</option>
-                      <option>$50K – $100K</option>
-                      <option>$100K+</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--text-muted)' }}>Project Type</label>
-                    <select className="w-full h-12 px-4 rounded-xl text-sm focus:outline-none appearance-none" style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }}>
-                      <option>Mobile App</option>
-                      <option>Web Platform</option>
-                      <option>AI / ML</option>
-                      <option>Blockchain</option>
-                      <option>Cloud / DevOps</option>
-                      <option>UI/UX Design</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: 'var(--text-muted)' }}>Tell us about your project</label>
-                  <textarea required rows={5} placeholder="Describe your project, goals, and timeline..." className="w-full px-4 py-3 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30 transition-all" style={{ background: 'var(--bg-input)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }} />
-                </div>
-
-                <button type="submit" disabled={loading} className="glow-button w-full justify-center py-4 text-base disabled:opacity-50 disabled:cursor-not-allowed">
-                  {loading ? (
-                    <><Loader2 className="w-5 h-5 animate-spin" /> Sending...</>
-                  ) : (
-                    <><Send className="w-5 h-5" /> Send Message</>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-
-        {/* Offices */}
-        <section className="mt-24">
-          <p className="section-label text-center">Global Offices</p>
-          <h2 className="text-3xl font-extrabold text-center mb-12" style={{ color: 'var(--text-heading)', fontFamily: 'var(--font-heading)' }}>
-            We&apos;re <span className="gradient-text">everywhere you need us.</span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {offices.map(o => (
-              <div key={o.city} className="enterprise-card rounded-2xl p-6 text-center">
-                <div className="text-4xl mb-3">{o.icon}</div>
-                <h3 className="text-lg font-bold mb-1" style={{ color: 'var(--text-heading)' }}>{o.city}</h3>
-                <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text-muted)' }}>{o.address}</p>
-                <p className="text-[10px] font-bold" style={{ color: 'var(--color-primary)' }}>{o.timezone}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
     </div>
   )
 }

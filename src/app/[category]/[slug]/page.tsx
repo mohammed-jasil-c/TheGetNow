@@ -1,46 +1,58 @@
-import { notFound } from 'next/navigation'
 import { getPageData, dynamicPages } from '@/lib/data/pages'
-import DynamicHero from '@/components/dynamic/DynamicHero'
-import FeatureShowcase from '@/components/dynamic/FeatureShowcase'
-import CTASection from '@/components/home/CTASection'
+import { getAllPages } from '@/lib/supabase-pages'
+import UnifiedPageRenderer from '@/components/dynamic/UnifiedPageRenderer'
+import type { Metadata } from 'next'
 
-// Generate static params for all possible category/slugs during build time
-export function generateStaticParams() {
-  return dynamicPages.map((page) => ({
+// Generate static params from both hardcoded + Supabase pages.
+export async function generateStaticParams() {
+  const staticParams = dynamicPages.map((page) => ({
     category: page.category,
     slug: page.slug,
   }))
-}
 
-export default async function DynamicCategoryPage(props: { params: Promise<{ category: string, slug: string }> }) {
-  const params = await props.params;
-  const pageData = getPageData(params.category, params.slug)
+  try {
+    const dbPages = await getAllPages()
+    const dbParams = dbPages.map((page) => ({
+      category: page.category,
+      slug: page.slug,
+    }))
 
-  if (!pageData) {
-    notFound()
+    // Deduplicate
+    const seen = new Set(staticParams.map(p => `${p.category}/${p.slug}`))
+    for (const p of dbParams) {
+      const key = `${p.category}/${p.slug}`
+      if (!seen.has(key)) {
+        staticParams.push(p)
+        seen.add(key)
+      }
+    }
+  } catch {
+    console.warn('⚠️ Could not fetch DB pages for static params')
   }
 
-  return (
-    <div className="min-h-screen theme-page relative">
-      <DynamicHero 
-        title={pageData.title}
-        subtitle={pageData.subtitle}
-        heroImage={pageData.heroImage}
-        gradientFrom={pageData.gradientFrom}
-        gradientTo={pageData.gradientTo}
-        techIcons={pageData.techIcons}
-        ctaText={pageData.ctaText}
-      />
+  return staticParams
+}
 
-      <FeatureShowcase 
-        overview={pageData.overview}
-        features={pageData.features}
-        heroImage={pageData.heroImage}
-      />
+export async function generateMetadata(
+  props: { params: Promise<{ category: string; slug: string }> }
+): Promise<Metadata> {
+  const params = await props.params
+  const pageData = await getPageData(params.category, params.slug)
 
-      {/* The CTA / Contact section requested for every page */}
-      <CTASection />
-      
-    </div>
-  )
+  if (!pageData) return { title: 'Page Not Found' }
+
+  return {
+    title: `${pageData.title} | TheGetNow`,
+    description: pageData.subtitle,
+  }
+}
+
+export default async function DynamicCategoryPage(props: {
+  params: Promise<{ category: string; slug: string }>
+}) {
+  const params = await props.params
+  const { category, slug } = params
+  const pageData = await getPageData(category, slug)
+
+  return <UnifiedPageRenderer slug={slug} category={category} pageData={pageData} />
 }

@@ -1,0 +1,283 @@
+export interface Service {
+  slug: string
+  title: string
+  subtitle: string
+  description: string
+  icon: string
+  gradient: string
+  accentColor: string
+  techStack: string[]
+  features: { title: string; description: string; icon: string }[]
+  process: { step: string; title: string; description: string }[]
+}
+
+export const SERVICES: Service[] = [
+  {
+    slug: 'web-development',
+    title: 'Custom Web Development',
+    subtitle: 'High-performance React & Node.js stacks that scale to millions of users.',
+    description: 'We architect and build production-grade web applications using cutting-edge frameworks. From complex dashboards to consumer-facing platforms, our full-stack engineering team delivers solutions that perform at enterprise scale.',
+    icon: 'faCode',
+    gradient: 'linear-gradient(135deg, #0057FF, #00D4FF)',
+    accentColor: '#0057FF',
+    techStack: ['React', 'Next.js', 'Node.js', 'TypeScript', 'PostgreSQL', 'AWS'],
+    features: [
+      { title: 'Server-Side Rendering', description: 'SEO-optimized Next.js applications with blazing fast TTFB.', icon: 'faServer' },
+      { title: 'API Architecture', description: 'RESTful and GraphQL APIs designed for scalability.', icon: 'faDiagramProject' },
+      { title: 'Real-time Systems', description: 'WebSocket-powered live dashboards and collaboration tools.', icon: 'faBolt' },
+      { title: 'Performance Tuning', description: 'Sub-second load times with code splitting and lazy loading.', icon: 'faGaugeHigh' },
+    ],
+    process: [
+      { step: '01', title: 'Discovery', description: 'Requirements gathering, user research, and technical scoping.' },
+      { step: '02', title: 'Architecture', description: 'System design, database schema, and API contracts.' },
+      { step: '03', title: 'Development', description: 'Agile sprints with CI/CD, testing, and code review.' },
+      { step: '04', title: 'Launch', description: 'Deployment, monitoring, and performance optimization.' },
+    ],
+  },
+  {
+    slug: 'mobile-app-development',
+    title: 'Mobile App Development',
+    subtitle: 'Native & cross-platform apps built for iOS and Android with pixel-perfect UIs.',
+    description: 'Our mobile team delivers apps that users love. From consumer apps to enterprise solutions, we build native and cross-platform applications that combine beautiful design with bulletproof performance.',
+    icon: 'faMobileScreenButton',
+    gradient: 'linear-gradient(135deg, #7B2FFF, #FF6B9D)',
+    accentColor: '#7B2FFF',
+    techStack: ['React Native', 'Flutter', 'Swift', 'Kotlin', 'Firebase', 'AWS'],
+    features: [
+      { title: 'Cross-Platform', description: 'Single codebase for iOS and Android with Flutter/React Native.', icon: 'faMobile' },
+      { title: 'Native Performance', description: 'Swift and Kotlin for compute-heavy applications.', icon: 'faRocket' },
+      { title: 'Offline-First', description: 'Local storage and sync capabilities for unreliable networks.', icon: 'faWifi' },
+      { title: 'Push Notifications', description: 'Targeted engagement with Firebase Cloud Messaging.', icon: 'faBell' },
+    ],
+    process: [
+      { step: '01', title: 'Wireframing', description: 'Low-fi prototypes and user flow mapping.' },
+      { step: '02', title: 'UI Design', description: 'High-fidelity Figma designs with interactive prototypes.' },
+      { step: '03', title: 'Build & Test', description: 'Feature development with automated testing.' },
+      { step: '04', title: 'App Store Launch', description: 'Submission, ASO optimization, and monitoring.' },
+    ],
+  },
+  {
+    slug: 'ai-development',
+    title: 'AI & Machine Learning',
+    subtitle: 'Custom LLMs, computer vision, NLP, and predictive analytics for enterprises.',
+    description: 'We build intelligent systems that transform raw data into actionable decisions. From custom GPT integrations and RAG pipelines to production ML models, our AI team delivers solutions that provide measurable ROI.',
+    icon: 'faBrain',
+    gradient: 'linear-gradient(135deg, #10B981, #00D4FF)',
+    accentColor: '#10B981',
+    techStack: ['Python', 'PyTorch', 'TensorFlow', 'LangChain', 'OpenAI', 'AWS SageMaker'],
+    features: [
+      { title: 'Custom LLMs', description: 'Fine-tuned language models for domain-specific applications.', icon: 'faComments' },
+      { title: 'Computer Vision', description: 'Object detection, OCR, and image analysis pipelines.', icon: 'faEye' },
+      { title: 'RAG Pipelines', description: 'Retrieval-augmented generation for knowledge-base Q&A.', icon: 'faDatabase' },
+      { title: 'Predictive Analytics', description: 'ML models for forecasting, anomaly detection, and classification.', icon: 'faChartLine' },
+    ],
+    process: [
+      { step: '01', title: 'Data Audit', description: 'Assess data quality, availability, and feature engineering.' },
+      { step: '02', title: 'Model Training', description: 'Experiment tracking, hyperparameter tuning, evaluation.' },
+      { step: '03', title: 'Integration', description: 'API deployment, edge inference, and A/B testing.' },
+      { step: '04', title: 'Monitoring', description: 'Model drift detection, retraining pipelines, and dashboards.' },
+    ],
+  },
+  {
+    slug: 'blockchain-development',
+    title: 'Blockchain & Web3',
+    subtitle: 'Smart contracts, DApps, DeFi protocols, and tokenization platforms.',
+    description: 'Our blockchain division has secured over $500M in TVL across DeFi protocols, NFT marketplaces, and enterprise blockchain solutions. We build trustless systems that redefine how value moves.',
+    icon: 'faCubes',
+    gradient: 'linear-gradient(135deg, #F59E0B, #FF6B35)',
+    accentColor: '#F59E0B',
+    techStack: ['Solidity', 'Rust', 'Hardhat', 'Ethers.js', 'IPFS', 'The Graph'],
+    features: [
+      { title: 'Smart Contracts', description: 'Audited, gas-optimized Solidity and Rust contracts.', icon: 'faFileContract' },
+      { title: 'DeFi Protocols', description: 'AMMs, lending platforms, yield aggregators.', icon: 'faCoins' },
+      { title: 'NFT Platforms', description: 'Marketplaces, minting engines, and royalty systems.', icon: 'faImages' },
+      { title: 'Token Engineering', description: 'ERC-20/721/1155 tokens with vesting and governance.', icon: 'faGem' },
+    ],
+    process: [
+      { step: '01', title: 'Tokenomics', description: 'Economic model design and game theory analysis.' },
+      { step: '02', title: 'Smart Contract Dev', description: 'Solidity/Rust development with test coverage.' },
+      { step: '03', title: 'Audit', description: 'Third-party security audit and formal verification.' },
+      { step: '04', title: 'Mainnet Deploy', description: 'Multi-chain deployment and monitoring setup.' },
+    ],
+  },
+  {
+    slug: 'cloud-computing',
+    title: 'Cloud Architecture',
+    subtitle: 'AWS, Azure, Google Cloud — designed for scale, security, and cost efficiency.',
+    description: 'We design and implement cloud infrastructure that auto-scales, self-heals, and stays within budget. From migration to greenfield builds, our cloud architects deliver production-grade environments.',
+    icon: 'faCloud',
+    gradient: 'linear-gradient(135deg, #0EA5E9, #7B2FFF)',
+    accentColor: '#0EA5E9',
+    techStack: ['AWS', 'Azure', 'GCP', 'Terraform', 'Kubernetes', 'Docker'],
+    features: [
+      { title: 'Multi-Cloud', description: 'Hybrid architectures across AWS, Azure, and GCP.', icon: 'faCloudArrowUp' },
+      { title: 'Serverless', description: 'Lambda, Cloud Functions, and event-driven architectures.', icon: 'faBolt' },
+      { title: 'Cost Optimization', description: 'Right-sizing, reserved instances, and spot strategies.', icon: 'faDollarSign' },
+      { title: 'Disaster Recovery', description: 'Multi-region failover with RPO/RTO guarantees.', icon: 'faShieldHalved' },
+    ],
+    process: [
+      { step: '01', title: 'Assessment', description: 'Current infrastructure audit and cloud readiness.' },
+      { step: '02', title: 'Architecture', description: 'Target state design with IaC blueprints.' },
+      { step: '03', title: 'Migration', description: 'Phased migration with zero-downtime cutover.' },
+      { step: '04', title: 'Operations', description: 'Monitoring, alerting, and cost management.' },
+    ],
+  },
+  {
+    slug: 'ui-ux-design',
+    title: 'UI/UX Design',
+    subtitle: 'Pixel-perfect interfaces, design systems, and user research that converts.',
+    description: 'Our design team creates interfaces that users love. From research and wireframing to high-fidelity prototypes and production-ready design systems, we deliver design excellence.',
+    icon: 'faPaintBrush',
+    gradient: 'linear-gradient(135deg, #EC4899, #F59E0B)',
+    accentColor: '#EC4899',
+    techStack: ['Figma', 'Adobe XD', 'Principle', 'Framer', 'Storybook', 'Tailwind'],
+    features: [
+      { title: 'User Research', description: 'Interviews, surveys, usability testing, and analytics.', icon: 'faUsers' },
+      { title: 'Design Systems', description: 'Scalable component libraries with tokens and documentation.', icon: 'faSwatchbook' },
+      { title: 'Prototyping', description: 'Interactive Figma prototypes for stakeholder validation.', icon: 'faLayerGroup' },
+      { title: 'Accessibility', description: 'WCAG 2.1 AA compliant designs for inclusive products.', icon: 'faUniversalAccess' },
+    ],
+    process: [
+      { step: '01', title: 'Research', description: 'User interviews, competitor analysis, and persona creation.' },
+      { step: '02', title: 'Wireframes', description: 'Low-fi mockups and information architecture.' },
+      { step: '03', title: 'Visual Design', description: 'High-fidelity UI with motion and micro-interactions.' },
+      { step: '04', title: 'Handoff', description: 'Developer specs, asset export, and design QA.' },
+    ],
+  },
+  {
+    slug: 'saas-development',
+    title: 'SaaS Platform Development',
+    subtitle: 'Multi-tenant cloud architectures that scale from MVP to enterprise.',
+    description: 'We build SaaS products from the ground up — multi-tenant architectures, subscription billing, analytics dashboards, and scalable APIs that handle millions of requests.',
+    icon: 'faRocket',
+    gradient: 'linear-gradient(135deg, #6366F1, #EC4899)',
+    accentColor: '#6366F1',
+    techStack: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe', 'Redis', 'AWS'],
+    features: [
+      { title: 'Multi-Tenancy', description: 'Isolated or shared database strategies per customer.', icon: 'faBuilding' },
+      { title: 'Billing & Subscriptions', description: 'Stripe integration with usage-based pricing.', icon: 'faCreditCard' },
+      { title: 'Analytics Dashboard', description: 'Real-time metrics and custom reporting.', icon: 'faChartBar' },
+      { title: 'API Platform', description: 'Public API with rate limiting, auth, and documentation.', icon: 'faPlug' },
+    ],
+    process: [
+      { step: '01', title: 'Product Strategy', description: 'Market analysis, feature prioritization, and roadmap.' },
+      { step: '02', title: 'MVP Build', description: 'Core features with authentication and billing.' },
+      { step: '03', title: 'Scale', description: 'Performance optimization and feature expansion.' },
+      { step: '04', title: 'Growth', description: 'Analytics, A/B testing, and user onboarding optimization.' },
+    ],
+  },
+  {
+    slug: 'devops-services',
+    title: 'DevOps & CI/CD',
+    subtitle: 'Automated release pipelines, infrastructure-as-code, and SRE practices.',
+    description: 'We implement DevOps practices that accelerate delivery and improve reliability. From CI/CD pipelines to Kubernetes orchestration, we build the infrastructure that powers fast, safe releases.',
+    icon: 'faGears',
+    gradient: 'linear-gradient(135deg, #14B8A6, #0EA5E9)',
+    accentColor: '#14B8A6',
+    techStack: ['Docker', 'Kubernetes', 'Terraform', 'GitHub Actions', 'ArgoCD', 'Datadog'],
+    features: [
+      { title: 'CI/CD Pipelines', description: 'Automated build, test, and deploy workflows.', icon: 'faCodeBranch' },
+      { title: 'Container Orchestration', description: 'Kubernetes clusters with auto-scaling and self-healing.', icon: 'faDharmachakra' },
+      { title: 'Infrastructure as Code', description: 'Terraform and Pulumi for reproducible environments.', icon: 'faFileCode' },
+      { title: 'Observability', description: 'Logging, monitoring, and distributed tracing.', icon: 'faChartArea' },
+    ],
+    process: [
+      { step: '01', title: 'Audit', description: 'Current pipeline and infrastructure assessment.' },
+      { step: '02', title: 'Design', description: 'Target architecture with IaC blueprints.' },
+      { step: '03', title: 'Implement', description: 'Pipeline setup, containerization, and orchestration.' },
+      { step: '04', title: 'Optimize', description: 'Performance tuning, cost optimization, and runbooks.' },
+    ],
+  },
+  {
+    slug: 'cybersecurity',
+    title: 'Cybersecurity',
+    subtitle: 'Zero-trust architecture, penetration testing, and compliance frameworks.',
+    description: 'We protect your digital assets with comprehensive security solutions. From zero-trust architecture design to compliance audits and incident response, our security team keeps your business safe.',
+    icon: 'faShieldHalved',
+    gradient: 'linear-gradient(135deg, #EF4444, #F59E0B)',
+    accentColor: '#EF4444',
+    techStack: ['AWS Security Hub', 'Vault', 'Snyk', 'OWASP', 'SOC2', 'ISO 27001'],
+    features: [
+      { title: 'Penetration Testing', description: 'White-box and black-box testing of web, mobile, and API.', icon: 'faBug' },
+      { title: 'Zero-Trust', description: 'Identity-aware proxy, micro-segmentation, and least-privilege.', icon: 'faLock' },
+      { title: 'Compliance', description: 'SOC2 Type II, ISO 27001, HIPAA, and GDPR audits.', icon: 'faClipboardCheck' },
+      { title: 'Incident Response', description: '24/7 monitoring with automated threat detection.', icon: 'faBell' },
+    ],
+    process: [
+      { step: '01', title: 'Risk Assessment', description: 'Threat modeling and vulnerability scanning.' },
+      { step: '02', title: 'Architecture', description: 'Security controls design and policy framework.' },
+      { step: '03', title: 'Implementation', description: 'Tool deployment, configuration, and hardening.' },
+      { step: '04', title: 'Monitoring', description: 'SIEM setup, alerting, and incident playbooks.' },
+    ],
+  },
+  {
+    slug: 'iot-solutions',
+    title: 'IoT & Edge Computing',
+    subtitle: 'Connected device ecosystems with real-time data processing at the edge.',
+    description: 'We design and build IoT solutions that connect physical and digital worlds. From sensor networks to edge computing platforms, we deliver end-to-end IoT architectures.',
+    icon: 'faMicrochip',
+    gradient: 'linear-gradient(135deg, #06B6D4, #10B981)',
+    accentColor: '#06B6D4',
+    techStack: ['AWS IoT', 'MQTT', 'Raspberry Pi', 'Arduino', 'InfluxDB', 'Grafana'],
+    features: [
+      { title: 'Device Management', description: 'OTA updates, provisioning, and fleet management.', icon: 'faServer' },
+      { title: 'Edge Processing', description: 'Real-time analytics at the edge with low latency.', icon: 'faMicrochip' },
+      { title: 'Data Pipelines', description: 'Time-series ingestion, transformation, and visualization.', icon: 'faStream' },
+      { title: 'Digital Twins', description: 'Virtual replicas of physical assets for simulation.', icon: 'faClone' },
+    ],
+    process: [
+      { step: '01', title: 'Hardware Selection', description: 'Sensor, gateway, and connectivity protocol selection.' },
+      { step: '02', title: 'Firmware Dev', description: 'Embedded software with secure boot and OTA.' },
+      { step: '03', title: 'Cloud Integration', description: 'IoT platform setup with real-time dashboards.' },
+      { step: '04', title: 'Scale', description: 'Fleet deployment, monitoring, and cost optimization.' },
+    ],
+  },
+  {
+    slug: 'ar-vr-development',
+    title: 'AR/VR Development',
+    subtitle: 'Immersive spatial computing experiences for training, retail, and entertainment.',
+    description: 'We create immersive experiences that push the boundaries of spatial computing. From AR product visualization to VR training simulations, we build the future of human-computer interaction.',
+    icon: 'faVrCardboard',
+    gradient: 'linear-gradient(135deg, #8B5CF6, #EC4899)',
+    accentColor: '#8B5CF6',
+    techStack: ['Unity', 'Unreal Engine', 'ARKit', 'ARCore', 'WebXR', 'Three.js'],
+    features: [
+      { title: 'AR Commerce', description: 'Product visualization and virtual try-on experiences.', icon: 'faStore' },
+      { title: 'VR Training', description: 'Immersive simulations for healthcare, manufacturing, and safety.', icon: 'faGraduationCap' },
+      { title: 'WebXR', description: 'Browser-based AR/VR without app installation.', icon: 'faGlobe' },
+      { title: 'Spatial Audio', description: '3D audio landscapes for immersive experiences.', icon: 'faVolumeHigh' },
+    ],
+    process: [
+      { step: '01', title: 'Concept', description: 'Use case definition and experience storyboarding.' },
+      { step: '02', title: '3D Assets', description: 'Modeling, texturing, and animation production.' },
+      { step: '03', title: 'Development', description: 'Unity/Unreal development with interaction design.' },
+      { step: '04', title: 'Testing', description: 'QA across devices, performance tuning, and deployment.' },
+    ],
+  },
+  {
+    slug: 'digital-transformation',
+    title: 'Digital Transformation',
+    subtitle: 'Enterprise modernization — from legacy systems to cloud-native architectures.',
+    description: 'We guide enterprises through digital transformation journeys. From legacy modernization and process automation to data platform migration, we help organizations evolve.',
+    icon: 'faArrowsRotate',
+    gradient: 'linear-gradient(135deg, #0057FF, #10B981)',
+    accentColor: '#0057FF',
+    techStack: ['Microservices', 'Event-Driven', 'Cloud Migration', 'API Gateway', 'Data Lake', 'CI/CD'],
+    features: [
+      { title: 'Legacy Modernization', description: 'Migrate monoliths to microservices architecture.', icon: 'faWandMagicSparkles' },
+      { title: 'Process Automation', description: 'RPA and workflow automation for operational efficiency.', icon: 'faRobot' },
+      { title: 'Data Platform', description: 'Modern data stack with warehouse, lakehouse, and BI.', icon: 'faDatabase' },
+      { title: 'Change Management', description: 'Training, adoption strategies, and KPI tracking.', icon: 'faPeopleArrows' },
+    ],
+    process: [
+      { step: '01', title: 'Assessment', description: 'Current state analysis and digital maturity scoring.' },
+      { step: '02', title: 'Strategy', description: 'Transformation roadmap with priority initiatives.' },
+      { step: '03', title: 'Execution', description: 'Phased implementation with agile delivery.' },
+      { step: '04', title: 'Optimization', description: 'Continuous improvement and ROI measurement.' },
+    ],
+  },
+]
+
+export function getServiceBySlug(slug: string): Service | undefined {
+  return SERVICES.find(s => s.slug === slug)
+}

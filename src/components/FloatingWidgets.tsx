@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { ArrowUp, X } from 'lucide-react'
 
 export default function FloatingWidgets() {
@@ -76,9 +77,9 @@ export default function FloatingWidgets() {
             <div className="flex-1">
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                 We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.{' '}
-                <a href="/privacy-policy" className="underline hover:text-[var(--color-primary)] transition-colors">
+                <Link href="/privacy-policy" className="underline hover:text-[var(--color-primary)] transition-colors">
                   Learn more
-                </a>
+                </Link>
               </p>
             </div>
             <div className="flex items-center gap-3 shrink-0">

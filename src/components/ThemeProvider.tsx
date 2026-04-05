@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -20,9 +20,10 @@ export function useTheme() {
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Read from localStorage or fall back to system preference
+    setMounted(true)
     const stored = localStorage.getItem('tgn-theme') as Theme | null
     const resolved: Theme =
       stored === 'dark' || stored === 'light'
@@ -34,13 +35,14 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   }, [])
 
   useEffect(() => {
-    const root = document.documentElement
-    root.classList.remove('dark', 'light')
-    root.classList.add(theme)
+    if (!mounted) return
+    document.documentElement.setAttribute('data-theme', theme)
     localStorage.setItem('tgn-theme', theme)
-  }, [theme])
+  }, [theme, mounted])
 
-  const toggleTheme = () => setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'))
+  }, [])
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown, ArrowRight, Monitor, Smartphone, Cpu, Cloud, PaintBucket, Blocks, Briefcase, Code2, Globe2, Brain, Fingerprint, Sun, Moon, Phone, Sparkles } from 'lucide-react'
+import { Menu, X, ChevronDown, ArrowRight, Monitor, Smartphone, Cpu, Cloud, PaintBucket, Blocks, Briefcase, Code2, Globe2, Brain, Fingerprint, Sun, Moon, Phone, Sparkles, Search } from 'lucide-react'
 import { useTheme } from './ThemeProvider'
+import SearchOverlay from './search/SearchOverlay'
 
 const navItems = [
   {
@@ -12,39 +13,39 @@ const navItems = [
     href: '/services',
     megaMenu: [
       {
-        title: 'Core Engineering',
+        title: 'Core Development',
         icon: <Code2 className="w-5 h-5 text-[#0057FF]" />,
         links: [
-          { label: 'Custom Web Development', href: '/services/web-development', sub: 'High-performance React & Node.js stacks' },
-          { label: 'Mobile App Development', href: '/services/mobile-app-development', sub: 'Native & Cross-platform (Flutter/Swift)' },
+          { label: 'Web Development', href: '/services/web-development', sub: 'High-performance stacks' },
+          { label: 'Mobile App Development', href: '/services/mobile-app-development', sub: 'Native & Cross-platform' },
           { label: 'SaaS Platform Development', href: '/services/saas-development', sub: 'Multi-tenant cloud architectures', badge: 'Popular' },
         ]
       },
       {
-        title: 'Emerging Tech',
-        icon: <Cpu className="w-5 h-5 text-[#7B2FFF]" />,
+        title: 'On-Demand Apps',
+        icon: <Smartphone className="w-5 h-5 text-[#7B2FFF]" />,
         links: [
-          { label: 'AI & Machine Learning', href: '/services/ai-development', sub: 'LLMs, Computer Vision & NLP', badge: 'Trending' },
-          { label: 'Blockchain Solutions', href: '/services/blockchain-development', sub: 'Smart Contracts & Web3 DApps' },
-          { label: 'IoT & Edge Computing', href: '/services/iot-solutions', sub: 'Connected device ecosystems' },
+          { label: 'Cab Booking App', href: '/services/cab-booking-app-detail', sub: 'Uber-like solutions', badge: 'Trending' },
+          { label: 'Food Delivery App', href: '/services/food-delivery-app-detail', sub: 'Swiggy/DoorDash clones' },
+          { label: 'Grocery Delivery', href: '/services/grocery-delivery-app-detail', sub: 'Instacart style platforms' },
         ]
       },
       {
-        title: 'Digital Experience',
+        title: 'Specialized Solutions',
         icon: <PaintBucket className="w-5 h-5 text-emerald-400" />,
         links: [
-          { label: 'UI/UX Interactive Design', href: '/services/ui-ux-design', sub: 'Pixel-perfect prototypes & systems' },
-          { label: 'AR / VR Development', href: '/services/ar-vr-development', sub: 'Immersive spatial computing' },
-          { label: 'Digital Transformation', href: '/services/digital-transformation', sub: 'Enterprise modernization' },
+          { label: 'Dating App Development', href: '/services/dating-app-development', sub: 'Tinder/Bumble clones', badge: 'New' },
+          { label: 'Real Estate App', href: '/services/real-estate-app-development', sub: 'Property tech platforms' },
+          { label: 'Travel App Development', href: '/services/travel-app-development', sub: 'Booking & itinerary engines' },
         ]
       },
       {
-        title: 'Cloud & Infrastructure',
+        title: 'Health & Lifestyle',
         icon: <Cloud className="w-5 h-5 text-sky-400" />,
         links: [
-          { label: 'Cloud Architecture', href: '/services/cloud-computing', sub: 'AWS, Azure, Google Cloud' },
-          { label: 'DevOps & CI/CD', href: '/services/devops-services', sub: 'Automated release pipelines' },
-          { label: 'Cybersecurity', href: '/services/cybersecurity', sub: 'Zero-trust architecture' },
+          { label: 'Healthcare App', href: '/services/healthcare-app-development', sub: 'Telemedicine & EHR solutions' },
+          { label: 'Fitness App', href: '/services/fitness-app-detail', sub: 'Workout & wellness tracking' },
+          { label: 'Pharmacy App', href: '/services/pharmacy-app-development', sub: 'Online medicine delivery' },
         ]
       }
     ]
@@ -98,6 +99,7 @@ const navItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [topBarVisible, setTopBarVisible] = useState(true)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -111,11 +113,23 @@ export default function Navbar() {
       setTopBarVisible(window.scrollY <= 60)
     }
     window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => window.addEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setIsSearchOpen(prev => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   useEffect(() => {
     setIsOpen(false)
+    setIsSearchOpen(false)
     setActiveDropdown(null)
     setMobileAccordion(null)
   }, [pathname])
@@ -131,6 +145,7 @@ export default function Navbar() {
 
   return (
     <>
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
       {/* ─── Top Bar ─────────────────────────────────────────────────────── */}
       <div
         className={`fixed top-0 left-0 right-0 z-[60] h-9 transition-all duration-500 ${
@@ -281,6 +296,23 @@ export default function Navbar() {
 
             {/* Right Side: CTA + Theme Toggle + Mobile Toggle */}
             <div className="flex items-center gap-2.5 z-50">
+              {/* Search Toggle */}
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="w-10 h-10 flex items-center justify-center rounded-full border transition-all duration-200 hover:scale-110 active:scale-95 group relative"
+                style={{
+                  background: 'var(--bg-card)',
+                  borderColor: 'var(--border-subtle)',
+                  color: 'var(--text-secondary)',
+                }}
+                aria-label="Search"
+              >
+                <Search className="w-4.5 h-4.5 group-hover:text-[var(--brand-blue)] transition-colors" />
+                <span className="absolute -bottom-12 right-0 bg-black text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                  Search <kbd className="ml-1 opacity-50">⌘K</kbd>
+                </span>
+              </button>
+
               <Link
                 href="/contact"
                 className="hidden md:flex items-center gap-2 h-10 px-6 rounded-full font-bold text-sm text-white transition-all hover:shadow-lg hover:scale-105"

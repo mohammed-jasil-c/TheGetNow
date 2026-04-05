@@ -1,52 +1,30 @@
-import AppinventivHero from '@/components/home/AppinventivHero'
-import AppinventivMarquee from '@/components/home/AppinventivMarquee'
-import StatsSection from '@/components/home/StatsSection'
-import AppinventivHorizontal from '@/components/home/AppinventivHorizontal'
-import ServicesSection from '@/components/home/ServicesSection'
-import TechStackSection from '@/components/home/TechStackSection'
-import Web3Section from '@/components/home/Web3Section'
-import IndustriesSection from '@/components/home/IndustriesSection'
-import ProcessSection from '@/components/home/ProcessSection'
-import TestimonialsSection from '@/components/home/TestimonialsSection'
-import CTASection from '@/components/home/CTASection'
-
-export const dynamic = 'force-dynamic'
+import HeroHome from '@/components/home/HeroHome'
+import ClientMarquee from '@/components/home/ClientMarquee'
+import BentoServices from '@/components/home/BentoServices'
+import FeatureBlocks from '@/components/home/FeatureBlocks'
+import TestimonialsCarousel from '@/components/home/TestimonialsCarousel'
+import HomeCTA from '@/components/home/HomeCTA'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden" style={{ background: 'var(--bg-page)' }}>
-      {/* Hero — Full-screen with dashboard mockup & gradient text */}
-      <AppinventivHero />
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
+      {/* Full-screen hero with animated headline and floating tech logos */}
+      <HeroHome />
 
-      {/* Client Logos — Dual-row infinite marquee */}
-      <AppinventivMarquee />
+      {/* Infinite marquee of client/partner logos */}
+      <ClientMarquee />
 
-      {/* Stats — 6 enterprise metrics with animated counters */}
-      <StatsSection />
+      {/* Bento-grid services showcase */}
+      <BentoServices />
 
-      {/* Horizontal Case Studies — GSAP pinned horizontal scroll */}
-      <AppinventivHorizontal />
+      {/* Alternating feature blocks with real images */}
+      <FeatureBlocks />
 
-      {/* Services — 9 category cards with background images */}
-      <ServicesSection />
+      {/* Horizontal scrolling testimonials */}
+      <TestimonialsCarousel />
 
-      {/* Tech Stack — 60+ technologies in 6 tabbed categories */}
-      <TechStackSection />
-
-      {/* Web3 — Blockchain capabilities & network support */}
-      <Web3Section />
-
-      {/* Industries — 12 verticals with stat badges */}
-      <IndustriesSection />
-
-      {/* Process — 5-step timeline with deliverables */}
-      <ProcessSection />
-
-      {/* Testimonials — 6 client cards with star ratings */}
-      <TestimonialsSection />
-
-      {/* Awards + CTA — Recognition badges & conversion banner */}
-      <CTASection />
+      {/* Gradient CTA section */}
+      <HomeCTA />
     </div>
   )
 }

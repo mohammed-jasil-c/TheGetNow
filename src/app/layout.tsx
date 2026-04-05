@@ -1,35 +1,48 @@
 import type { Metadata } from 'next'
-import { Inter, Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google'
+import { Playfair_Display, DM_Sans, Space_Grotesk } from 'next/font/google'
 import './globals.css'
+import ThemeProvider from '@/components/ThemeProvider'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import FloatingWidgets from '@/components/layout/FloatingWidgets'
-import PageTransition from '@/components/layout/PageTransition'
 
-const inter = Inter({ 
-  subsets: ['latin'], 
-  weight: ['400', '500'],
-  variable: '--font-inter', 
-  display: 'swap' 
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-playfair',
+  display: 'swap',
 })
 
-const jakarta = Plus_Jakarta_Sans({ 
-  subsets: ['latin'], 
-  weight: ['600', '700', '800', '900'], 
-  variable: '--font-jakarta', 
-  display: 'swap' 
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-dm-sans',
+  display: 'swap',
 })
 
-const grotesk = Space_Grotesk({ 
-  subsets: ['latin'], 
-  weight: ['500', '700'], 
-  variable: '--font-grotesk', 
-  display: 'swap' 
+const grotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['500', '700'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: 'TheGetNow | Enterprise Software Development & Digital Transformation',
-  description: 'Enterprise IT agency delivering next-gen digital solutions in AI, Blockchain, Web3, and Mobile App Development.',
+  description: 'Enterprise IT agency delivering next-gen digital solutions in AI, Blockchain, Web3, and Mobile App Development. Trusted by leading brands worldwide.',
+  keywords: 'AI development, blockchain, web3, mobile app development, enterprise software, digital transformation',
+  openGraph: {
+    title: 'TheGetNow | Enterprise Software Development',
+    description: 'We engineer world-class digital products for startups and Fortune 500 enterprises.',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'TheGetNow',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TheGetNow | Enterprise Software Development',
+    description: 'We engineer world-class digital products for startups and Fortune 500 enterprises.',
+  },
 }
 
 export default function RootLayout({
@@ -37,18 +50,60 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'TheGetNow',
+    url: 'https://thegetnow.com',
+    logo: 'https://thegetnow.com/logo.png',
+    description: 'Enterprise IT agency delivering next-gen digital solutions.',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'One World Trade Center, Floor 85',
+      addressLocality: 'New York',
+      addressRegion: 'NY',
+      postalCode: '10007',
+      addressCountry: 'US',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+1-628-432-7890',
+      contactType: 'sales',
+      email: 'hello@thegetnow.com',
+    },
+    sameAs: [
+      'https://linkedin.com/company/thegetnow',
+      'https://twitter.com/thegetnow',
+      'https://github.com/thegetnow',
+    ],
+  }
+
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${jakarta.variable} ${grotesk.variable} antialiased min-h-screen flex flex-col bg-[#06080F] text-[#F0F6FF]`}>
-        {/* We will add ThemeProvider wrapper in the components themselves if needed, but the prompt only explicitly requested ThemeProvider, FloatingWidgets. We'll wrap children with what we need. */}
-        <Navbar />
-        <PageTransition>
-          <main className="flex-grow">
+    <html
+      lang="en"
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${playfair.variable} ${dmSans.variable} ${grotesk.variable}`}
+    >
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="antialiased min-h-screen flex flex-col">
+        <ThemeProvider>
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+          <Navbar />
+          <main id="main-content" role="main" className="flex-grow">
             {children}
           </main>
-        </PageTransition>
-        <Footer />
-        <FloatingWidgets />
+          <Footer />
+          <FloatingWidgets />
+        </ThemeProvider>
       </body>
     </html>
   )
