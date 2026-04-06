@@ -17,12 +17,12 @@ export default function HeroCinematic({ title, subtitle, heroImage, gradientFrom
   useEffect(() => {
     // Cinematic entrance
     gsap.fromTo('.cinematic-bg', 
-      { scale: 1.15, opacity: 0 }, 
+      { scale: 1.15 }, 
       { scale: 1, opacity: 1, duration: 2, ease: "power3.out" }
     )
     
     gsap.fromTo('[data-cine-fade] > *', 
-      { y: 60, opacity: 0 }, 
+      { y: 60 }, 
       { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out", delay: 0.3 }
     )
   }, [title])

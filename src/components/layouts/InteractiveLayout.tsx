@@ -68,12 +68,12 @@ export default function InteractiveLayout({ page }: { page: FullPage }) {
     const ctx = gsap.context(() => {
       // Massive text stagger reveal
       gsap.from('.hero-word', {
-        y: 100, opacity: 0, rotate: 10, stagger: 0.1, duration: 1.2, ease: 'back.out(1.5)',
+        y: 100, rotate: 10, stagger: 0.1, duration: 1.2, ease: 'back.out(1.5)',
       })
 
       // Expanding sections
       gsap.from('.feature-block', {
-        scale: 0.9, opacity: 0, y: 50, stagger: 0.2, duration: 1, ease: 'power3.out',
+        scale: 0.9, y: 50, stagger: 0.2, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: '.features-container', start: 'top 85%' }
       })
 

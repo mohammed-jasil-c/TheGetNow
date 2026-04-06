@@ -105,7 +105,38 @@ CREATE TABLE IF NOT EXISTS public.contact_requests (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- ─── 8. ROW LEVEL SECURITY ───────────────────────────────────
+-- ─── 8. CAREERS ──────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.careers (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    slug TEXT UNIQUE NOT NULL,
+    title TEXT NOT NULL,
+    department TEXT NOT NULL,
+    location TEXT NOT NULL,
+    type TEXT NOT NULL,
+    tags TEXT[],
+    description TEXT NOT NULL,
+    responsibilities TEXT[],
+    requirements TEXT[],
+    benefits TEXT[],
+    published BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- ─── 9. JOB APPLICATIONS ─────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.job_applications (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    job_id UUID REFERENCES public.careers(id) ON DELETE CASCADE,
+    full_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    resume_url TEXT NOT NULL,
+    portfolio_url TEXT,
+    cover_letter TEXT,
+    status TEXT DEFAULT 'pending',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- ─── 10. ROW LEVEL SECURITY ──────────────────────────────────
 ALTER TABLE public.pages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.page_sections ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.page_features ENABLE ROW LEVEL SECURITY;
@@ -113,6 +144,8 @@ ALTER TABLE public.page_stats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.page_faqs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.page_testimonials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.contact_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.careers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.job_applications ENABLE ROW LEVEL SECURITY;
 
 -- Drop all policies first (idempotent)
 DROP POLICY IF EXISTS "Public pages are viewable by everyone." ON public.pages;
@@ -125,6 +158,10 @@ DROP POLICY IF EXISTS "Public page faqs are viewable by everyone." ON public.pag
 DROP POLICY IF EXISTS "Public page testimonials are viewable by everyone." ON public.page_testimonials;
 DROP POLICY IF EXISTS "Service role can manage contact requests." ON public.contact_requests;
 DROP POLICY IF EXISTS "Anyone can insert contact requests." ON public.contact_requests;
+DROP POLICY IF EXISTS "Public careers are viewable by everyone." ON public.careers;
+DROP POLICY IF EXISTS "Admins can manage careers." ON public.careers;
+DROP POLICY IF EXISTS "Service role can manage job applications." ON public.job_applications;
+DROP POLICY IF EXISTS "Anyone can insert job applications." ON public.job_applications;
 
 -- Recreate policies
 CREATE POLICY "Public pages are viewable by everyone." ON public.pages FOR SELECT USING (true);
@@ -137,8 +174,12 @@ CREATE POLICY "Public page faqs are viewable by everyone." ON public.page_faqs F
 CREATE POLICY "Public page testimonials are viewable by everyone." ON public.page_testimonials FOR SELECT USING (true);
 CREATE POLICY "Service role can manage contact requests." ON public.contact_requests FOR ALL TO service_role USING (true) WITH CHECK (true);
 CREATE POLICY "Anyone can insert contact requests." ON public.contact_requests FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public careers are viewable by everyone." ON public.careers FOR SELECT USING (true);
+CREATE POLICY "Admins can manage careers." ON public.careers FOR ALL TO authenticated USING (true) WITH CHECK (true);
+CREATE POLICY "Service role can manage job applications." ON public.job_applications FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Anyone can insert job applications." ON public.job_applications FOR INSERT WITH CHECK (true);
 
--- ─── 9. INDEXES ──────────────────────────────────────────────
+-- ─── 11. INDEXES ─────────────────────────────────────────────
 CREATE INDEX IF NOT EXISTS idx_pages_routing ON public.pages (category, slug);
 CREATE INDEX IF NOT EXISTS idx_pages_category ON public.pages (category);
 CREATE INDEX IF NOT EXISTS idx_pages_published ON public.pages (published);
@@ -151,4 +192,9 @@ CREATE INDEX IF NOT EXISTS idx_page_faqs_page_id ON public.page_faqs (page_id, o
 CREATE INDEX IF NOT EXISTS idx_page_testimonials_page_id ON public.page_testimonials (page_id, order_index ASC);
 CREATE INDEX IF NOT EXISTS idx_contact_requests_email ON public.contact_requests (email);
 CREATE INDEX IF NOT EXISTS idx_contact_requests_created_at ON public.contact_requests (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_careers_slug ON public.careers (slug);
+CREATE INDEX IF NOT EXISTS idx_careers_published ON public.careers (published);
+CREATE INDEX IF NOT EXISTS idx_job_applications_email ON public.job_applications (email);
+CREATE INDEX IF NOT EXISTS idx_job_applications_job_id ON public.job_applications (job_id);
+
 NOTIFY pgrst, 'reload schema';

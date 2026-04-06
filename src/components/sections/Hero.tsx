@@ -64,11 +64,11 @@ export default function Hero() {
     // or manually wrap words if SplitText requires premium license.
     // For now we do robust standard element stagger.
     
-    gsap.fromTo(badgeRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0 });
-    gsap.fromTo(h1Ref.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.2 });
-    gsap.fromTo(subtextRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.5 });
-    gsap.fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.7 });
-    gsap.fromTo(trustRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.9 });
+    gsap.fromTo(badgeRef.current, { y: 20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0 });
+    gsap.fromTo(h1Ref.current, { y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.2 });
+    gsap.fromTo(subtextRef.current, { y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.5 });
+    gsap.fromTo(ctaRef.current, { y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.7 });
+    gsap.fromTo(trustRef.current, { y: 20 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.9 });
   }, []);
 
   return (
@@ -91,23 +91,23 @@ export default function Hero() {
         {/* LEFT COLUMN */}
         <div className="col-span-1 lg:col-span-7 flex flex-col justify-center">
           
-          <div ref={badgeRef} className="opacity-0 self-start inline-flex items-center gap-3 border border-[#00D4FF]/40 bg-[#00D4FF]/10 text-[#00D4FF] rounded-full px-5 py-2 text-sm font-medium mb-8">
+          <div ref={badgeRef} className="self-start inline-flex items-center gap-3 border border-[#00D4FF]/40 bg-[#00D4FF]/10 text-[#00D4FF] rounded-full px-5 py-2 text-sm font-medium mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-pulse"></span>
             ✦ Trusted by 500+ Global Brands
           </div>
 
-          <h1 ref={h1Ref} className="opacity-0 font-heading font-extrabold text-[#F0F6FF] leading-[1.05] mb-6 translate-y-[0]">
+          <h1 ref={h1Ref} className="font-heading font-extrabold text-[#F0F6FF] leading-[1.05] mb-6 translate-y-[0]">
             <div className="text-[clamp(42px,5vw,72px)]">We Build Digital</div>
             <div className="text-[clamp(42px,5vw,72px)]">Products That</div>
             <div className="text-[clamp(42px,5vw,72px)] gradient-text-hero">Scale Globally</div>
           </h1>
 
-          <p ref={subtextRef} className="opacity-0 max-w-[520px] text-[#6B7A99] font-sans text-lg leading-[1.7] mb-10">
+          <p ref={subtextRef} className="max-w-[520px] text-[#6B7A99] font-sans text-lg leading-[1.7] mb-10">
             From AI-powered platforms to full-scale blockchain solutions &mdash; we engineer products that users love and enterprises scale with. 250+ expert developers. 12+ years. 1000+ clients.
           </p>
 
           {/* CTA Row */}
-          <div ref={ctaRef} className="opacity-0 flex items-center gap-4 flex-wrap mb-14">
+          <div ref={ctaRef} className="flex items-center gap-4 flex-wrap mb-14">
             <button className="group btn-primary">
               Start Your Project
               <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -119,7 +119,7 @@ export default function Hero() {
           </div>
 
           {/* Trust Indicators */}
-          <div ref={trustRef} className="opacity-0 flex items-center gap-8 flex-wrap">
+          <div ref={trustRef} className="flex items-center gap-8 flex-wrap">
             <div className="flex flex-col">
               <span className="text-[#F7C948] tracking-widest leading-none mb-1 text-base">★★★★★</span>
               <span className="text-white text-sm">4.9/5 on Clutch</span>

@@ -45,13 +45,13 @@ export default function SearchOverlay() {
       document.body.style.overflow = 'hidden'
       gsap.to(overlayRef.current, { opacity: 1, duration: 0.3, autoAlpha: 1 })
       gsap.fromTo(modalRef.current, 
-        { y: -20, opacity: 0, scale: 0.98 },
+        { y: -20, scale: 0.98 },
         { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.4)' }
       )
       setTimeout(() => inputRef.current?.focus(), 100)
     } else {
       document.body.style.overflow = ''
-      gsap.to(overlayRef.current, { opacity: 0, duration: 0.2, autoAlpha: 0 })
+      gsap.to(overlayRef.current, { duration: 0.2, autoAlpha: 0 })
     }
   }, [open])
 

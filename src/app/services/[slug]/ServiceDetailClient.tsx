@@ -1,114 +1,148 @@
 'use client'
 
+import { useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { FaArrowRight, FaCheck } from 'react-icons/fa6'
-import { SiReact, SiNextdotjs, SiNodedotjs, SiTypescript, SiPython, SiDocker, SiKubernetes, SiGooglecloud, SiTerraform, SiPostgresql, SiRedis, SiFirebase, SiFlutter, SiSolidity, SiGraphql, SiTailwindcss, SiFigma } from 'react-icons/si'
-import { FaAws } from 'react-icons/fa6'
-import ScrollReveal from '@/components/animations/ScrollReveal'
-import StaggerChildren from '@/components/animations/StaggerChildren'
+import dynamic from 'next/dynamic'
+import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+// Local Rich Data
+import { richServiceData } from '@/data/serviceData'
 import type { Service } from '@/data/services'
 
-const techIconMap: Record<string, any> = {
-  'React': SiReact, 'Next.js': SiNextdotjs, 'Node.js': SiNodedotjs, 'TypeScript': SiTypescript,
-  'Python': SiPython, 'Docker': SiDocker, 'Kubernetes': SiKubernetes, 'AWS': FaAws,
-  'GCP': SiGooglecloud, 'Terraform': SiTerraform, 'PostgreSQL': SiPostgresql, 'Redis': SiRedis,
-  'Firebase': SiFirebase, 'Flutter': SiFlutter, 'Solidity': SiSolidity, 'GraphQL': SiGraphql,
-  'Tailwind': SiTailwindcss, 'Figma': SiFigma,
+// Dynamically import the 3D Hero to prevent SSR layout shifts
+const ServiceHero3D = dynamic(() => import('@/components/services/ServiceHero3D'), { ssr: false })
+
+gsap.registerPlugin(ScrollTrigger)
+
+interface Props {
+  service: Service
 }
 
-export default function ServiceDetailClient({ service }: { service: Service }) {
-  return (
-    <div className="min-h-screen" style={{ background: 'var(--color-bg)' }}>
+export default function ServiceDetailClient({ service }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null)
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--gradient-glow)' }} />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <p className="section-label mb-4">Our Services</p>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 font-heading" style={{ color: 'var(--color-text)' }}>
+  // Retrieve the massively detailed content object, or fallback to sensible defaults
+  const detailedData = richServiceData[service.slug] || {
+    primaryColor: service.accentColor || '#0057FF',
+    accentColor: '#00D4FF',
+    heroTag: 'Enterprise Solutions',
+    overview: service.description || 'We deliver high-end enterprise solutions uniquely tailored to accelerate your fundamental operating capacities.',
+    benefits: [
+      { title: 'Extreme Performance', desc: 'Optimized from the ground up to render instantly.', icon: CheckCircle2 },
+      { title: 'Global Scale', desc: 'Architected to handle massive concurrency effortlessly.', icon: CheckCircle2 },
+      { title: 'Bulletproof Security', desc: 'Secure by default with uncompromising data encryption.', icon: CheckCircle2 }
+    ],
+    capabilities: service.features.length > 0 ? service.features : [
+      { id: '1', title: 'Consulting', desc: 'We analyze your requirements in deep detail.' },
+      { id: '2', title: 'Development', desc: 'Agile sprints leading to rapid robust deliverables.' }
+    ],
+    techStack: service.techStack.length > 0 ? service.techStack : ['React', 'Node.js', 'PostgreSQL', 'AWS'],
+    process: service.process.length > 0 ? service.process : [
+      { step: '01', title: 'Discovery', desc: 'Initial scoping.' },
+      { step: '02', title: 'Execution', desc: 'Building phase.' }
+    ]
+  }
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Hero Entrance Animation
+      gsap.from('.sv-hero-text > *', {
+        y: 50, duration: 1.2, stagger: 0.15, ease: 'expo.out', delay: 0.2
+      })
+
+      // 2. Overview Fade
+      gsap.from('.sv-overview', {
+        y: 40, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.sv-overview', start: 'top 85%' }
+      })
+
+      // 3. Benefits staggered reveal
+      gsap.from('.sv-benefit-card', {
+        y: 60, rotationX: -10, duration: 0.8, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.sv-benefits-grid', start: 'top 80%' }
+      })
+
+      // 4. Capabilities Cards (Horizontal staggering)
+      gsap.from('.sv-capability', {
+        x: -50, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.sv-capabilities-grid', start: 'top 80%' }
+      })
+
+      // 5. Tech Stack floating bubbles
+      gsap.from('.sv-tech-badge', {
+        scale: 0.5, duration: 0.6, stagger: 0.05, ease: 'back.out(2)',
+        scrollTrigger: { trigger: '.sv-tech-container', start: 'top 85%' }
+      })
+
+      // 6. Process Timeline
+      gsap.from('.sv-process-step', {
+        y: 40, duration: 0.8, stagger: 0.2, ease: 'power2.out',
+        scrollTrigger: { trigger: '.sv-process-container', start: 'top 75%' }
+      })
+
+    }, containerRef)
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <div ref={containerRef} className="min-h-screen relative overflow-x-hidden" style={{ background: 'var(--color-bg)' }}>
+      
+      {/* 3D WEBGL HERO */}
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-32 pb-20">
+        <ServiceHero3D primaryColor={detailedData.primaryColor} slug={service.slug} />
+        
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center sv-hero-text">
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border shadow-sm backdrop-blur-md" style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: detailedData.primaryColor }} />
+            <span className="text-xs font-black uppercase tracking-widest" style={{ color: detailedData.primaryColor }}>
+              {detailedData.heroTag}
+            </span>
+          </div>
+
+          <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tight mb-8 leading-[1]" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>
             {service.title}
           </h1>
-          <p className="text-xl max-w-2xl mx-auto mb-10" style={{ color: 'var(--color-text-secondary)' }}>
+          
+          <p className="text-xl md:text-3xl max-w-3xl mx-auto font-medium" style={{ color: 'var(--color-text-secondary)' }}>
             {service.subtitle}
           </p>
-          <Link href="/contact" className="glow-button text-base">
-            Start Your Project <FaArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </section>
 
-      {/* Description */}
-      <ScrollReveal>
-        <section className="pb-20 max-w-4xl mx-auto px-6">
-          <div className="space-y-6">
-            {service.description.split('\n').filter(Boolean).map((line, i) => (
-              <p key={i} className="text-lg leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>
-                {line}
-              </p>
-            ))}
-          </div>
-        </section>
-      </ScrollReveal>
+      {/* OVERVIEW */}
+      <section className="py-24 relative sv-overview">
+        <div className="max-w-[1000px] mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold leading-tight" style={{ color: 'var(--color-text)' }}>
+            {detailedData.overview}
+          </h2>
+        </div>
+      </section>
 
-      {/* Features Grid */}
+      {/* BENEFITS / VALUE PROPOSITION */}
       <section className="py-24" style={{ background: 'var(--color-surface)' }}>
         <div className="max-w-[1400px] mx-auto px-6">
-          <ScrollReveal className="text-center mb-16">
-            <p className="section-label">Capabilities</p>
-            <h2 className="section-title mt-3">What we <span className="gradient-text">deliver.</span></h2>
-          </ScrollReveal>
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {service.features.map((f, i) => (
-              <div key={i} className="enterprise-card rounded-2xl p-8 flex items-start gap-5">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${service.accentColor}15`, color: service.accentColor }}>
-                  <FaCheck className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-text)' }}>{f.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{f.description}</p>
-                </div>
-              </div>
-            ))}
-          </StaggerChildren>
-        </div>
-      </section>
-
-      {/* Process Timeline (Horizontal) */}
-      <section className="py-24">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <ScrollReveal className="text-center mb-16">
-            <p className="section-label">Our Process</p>
-            <h2 className="section-title mt-3">How we <span className="gradient-text">work.</span></h2>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {service.process.map((p, i) => (
-              <div key={i} className="enterprise-card rounded-2xl p-8 text-center relative">
-                <div className="text-4xl font-black mb-4 font-heading gradient-text">{p.step}</div>
-                <h3 className="text-lg font-bold mb-3" style={{ color: 'var(--color-text)' }}>{p.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--color-muted)' }}>{p.description}</p>
-                {i < service.process.length - 1 && (
-                  <FaArrowRight className="hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--color-border-strong)' }} />
-                )}
-              </div>
-            ))}
+          <div className="mb-16">
+            <p className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: detailedData.primaryColor }}>Unfair Advantages</p>
+            <h2 className="text-4xl md:text-6xl font-extrabold" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>
+              Why we lead the pack.
+            </h2>
           </div>
-        </div>
-      </section>
 
-      {/* Tech Stack */}
-      <section className="py-24" style={{ background: 'var(--color-surface)' }}>
-        <div className="max-w-[1400px] mx-auto px-6">
-          <ScrollReveal className="text-center mb-12">
-            <p className="section-label">Tech Stack</p>
-            <h2 className="section-title mt-3">Technologies we <span className="gradient-text">leverage.</span></h2>
-          </ScrollReveal>
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {service.techStack.map(tech => {
-              const TechIcon = techIconMap[tech]
+          <div className="sv-benefits-grid grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {detailedData.benefits.map((benefit: any, i: number) => {
+              const Icon = benefit.icon
               return (
-                <div key={tech} className="enterprise-card rounded-2xl px-6 py-4 flex items-center gap-3 hover:-translate-y-1 transition-transform">
-                  {TechIcon && <TechIcon className="w-6 h-6" style={{ color: 'var(--color-primary)' }} />}
-                  <span className="text-sm font-bold" style={{ color: 'var(--color-text)' }}>{tech}</span>
+                <div key={i} className="sv-benefit-card group p-10 rounded-[2.5rem] relative overflow-hidden transition-all duration-500 hover:-translate-y-2 border shadow-sm" style={{ background: 'var(--color-bg)', borderColor: 'var(--color-border)' }}>
+                  {/* Subtle inner hover glow */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 pointer-events-none transition-opacity duration-700" style={{ background: `radial-gradient(circle at center, ${detailedData.primaryColor}, transparent)` }} />
+                  
+                  <div className="w-16 h-16 mb-8 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110" style={{ background: `${detailedData.primaryColor}15`, color: detailedData.primaryColor }}>
+                    <Icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>{benefit.title}</h3>
+                  <p className="text-base leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{benefit.desc}</p>
                 </div>
               )
             })}
@@ -116,21 +150,94 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 text-center">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-4xl font-extrabold mb-6 font-heading" style={{ color: 'var(--color-text)' }}>
-            Ready to get started?
-          </h2>
-          <p className="text-lg mb-8" style={{ color: 'var(--color-text-secondary)' }}>
-            Let&apos;s discuss how our {service.title.toLowerCase()} expertise can drive your business forward.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className="glow-button text-base">Get Free Consultation <FaArrowRight className="w-4 h-4" /></Link>
-            <Link href="/portfolio" className="outline-button text-base">View Case Studies</Link>
+      {/* CAPABILITIES (Bento Grid Style) */}
+      <section className="py-32 relative">
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="mb-20 lg:w-1/2">
+            <h2 className="text-5xl md:text-7xl font-extrabold leading-[1.1]" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>
+              Core <br />
+              <span className="gradient-text-hero">Capabilities.</span>
+            </h2>
+          </div>
+
+          <div className="sv-capabilities-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+            {detailedData.capabilities.map((cap: any, i: number) => (
+              <div key={i} className="sv-capability group p-8 lg:p-12 rounded-[2rem] flex flex-col justify-between min-h-[250px] relative overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+                <div className="flex justify-between items-start mb-12 relative z-10">
+                  <span className="text-5xl font-black opacity-10 group-hover:opacity-20 transition-opacity" style={{ color: detailedData.primaryColor }}>
+                    0{cap.id}
+                  </span>
+                  <div className="w-12 h-12 rounded-full border flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500" style={{ borderColor: 'var(--color-border-strong)', color: 'var(--color-text)' }}>
+                    <ArrowUpRight className="w-5 h-5" />
+                  </div>
+                </div>
+                <div className="relative z-10">
+                  <h3 className="text-3xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>{cap.title}</h3>
+                  <p className="text-lg leading-relaxed max-w-lg" style={{ color: 'var(--color-text-secondary)' }}>{cap.desc}</p>
+                </div>
+                {/* Background color bleed on hover */}
+                <div className="absolute bottom-0 right-0 w-[300px] h-[300px] opacity-0 group-hover:opacity-5 blur-[100px] transition-opacity duration-700 pointer-events-none rounded-full" style={{ background: detailedData.accentColor }} />
+              </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* PROCESS TIMELINE */}
+      <section className="py-24" style={{ background: 'var(--color-surface)' }}>
+        <div className="max-w-[1400px] mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-extrabold" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>
+              Execution Methodology
+            </h2>
+          </div>
+          
+          <div className="sv-process-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {detailedData.process.map((step: any, i: number) => (
+              <div key={i} className="sv-process-step relative p-8 rounded-[2rem] border" style={{ background: 'var(--color-bg)', borderColor: 'var(--color-border)' }}>
+                <div className="text-sm font-bold tracking-widest uppercase mb-10" style={{ color: detailedData.primaryColor }}>{step.step}</div>
+                <h3 className="text-2xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>{step.title}</h3>
+                <p className="text-base leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{step.desc}</p>
+
+                {/* Connecting Line for LG screens */}
+                {i < detailedData.process.length - 1 && (
+                  <div className="hidden lg:block absolute top-[50px] -right-[15px] w-[30px] h-[2px] z-0" style={{ background: 'var(--color-border-strong)' }} />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TECH STACK */}
+      <section className="py-32 relative overflow-hidden">
+        <div className="max-w-[1000px] mx-auto px-6 text-center sv-tech-container">
+          <h2 className="text-3xl font-bold mb-12" style={{ color: 'var(--color-text)' }}>Technology Arsenal</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {detailedData.techStack.map((tech: string, i: number) => (
+              <div key={i} className="sv-tech-badge px-6 py-3 rounded-full border font-bold text-sm tracking-wide shadow-sm hover:scale-110 transition-transform cursor-default" style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-text)' }}>
+                {tech}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-32 text-center" style={{ background: detailedData.primaryColor }}>
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
+          <h2 className="text-5xl md:text-7xl font-black mb-8 text-white font-heading">
+            Initialize the build.
+          </h2>
+          <p className="text-xl mb-12 text-white/80 font-medium">
+            Let our architecture team design the blueprint for your next major release.
+          </p>
+          <Link href="/contact" className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-bold text-lg bg-white text-black hover:scale-105 transition-transform shadow-xl">
+            Schedule Architecture Review <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </section>
+
     </div>
   )
 }

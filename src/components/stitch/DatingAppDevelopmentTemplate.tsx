@@ -24,7 +24,7 @@ export default function DatingAppDevelopmentTemplate({ pageData }: Props) {
         const sections = gsap.utils.toArray('section', containerRef.current);
         sections.forEach((sec: any) => {
             gsap.fromTo(sec, 
-                { opacity: 0, y: 40 },
+                { y: 40 },
                 { 
                     opacity: 1, 
                     y: 0, 

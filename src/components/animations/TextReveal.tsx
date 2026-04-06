@@ -42,7 +42,6 @@ export default function TextReveal({
     const ctx = gsap.context(() => {
       gsap.from(el.querySelectorAll('.reveal-item'), {
         y: 60,
-        opacity: 0,
         duration,
         stagger,
         delay,

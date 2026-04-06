@@ -23,7 +23,6 @@ export default function ResultGrid({ stats }: ResultGridProps) {
     const ctx = gsap.context(() => {
       gsap.from('.result-card', {
         y: 60,
-        opacity: 0,
         duration: 0.8,
         stagger: 0.2,
         ease: 'power3.out',

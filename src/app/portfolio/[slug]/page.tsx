@@ -5,6 +5,8 @@ import type { Metadata } from 'next'
 
 interface Props { params: Promise<{ slug: string }> }
 
+export const revalidate = 0;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const { data: project } = await supabaseServer

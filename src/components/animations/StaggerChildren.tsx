@@ -37,7 +37,6 @@ export default function StaggerChildren({
       gsap.fromTo(children, 
         {
           y,
-          opacity: 0,
         },
         {
           y: 0,

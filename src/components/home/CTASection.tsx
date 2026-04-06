@@ -23,16 +23,16 @@ export default function CTASection() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.award-badge', {
-        scale: 0, rotation: 10, opacity: 0, duration: 0.6,
+        scale: 0, rotation: 10, duration: 0.6,
         stagger: 0.08, ease: 'back.out(2)',
         scrollTrigger: { trigger: '.awards-grid', start: 'top 85%' }
       })
       gsap.from('.cta-headline', {
-        y: 60, opacity: 0, duration: 1.2, ease: 'expo.out',
+        y: 60, duration: 1.2, ease: 'expo.out',
         scrollTrigger: { trigger: '.cta-headline', start: 'top 85%' }
       })
       gsap.from('.cta-btns', {
-        y: 40, opacity: 0, duration: 0.8, delay: 0.3, ease: 'power3.out',
+        y: 40, duration: 0.8, delay: 0.3, ease: 'power3.out',
         scrollTrigger: { trigger: '.cta-btns', start: 'top 90%' }
       })
     }, sectionRef)

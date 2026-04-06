@@ -28,7 +28,7 @@ export default function FeatureZigZag({ overview, features }: FeatureZigZagProps
       const isEven = i % 2 === 0;
 
       gsap.fromTo(textBlock,
-        { x: isEven ? -100 : 100, opacity: 0 },
+        { x: isEven ? -100 : 100 },
         {
           x: 0, opacity: 1, duration: 1, ease: "power3.out",
           scrollTrigger: {
@@ -41,7 +41,7 @@ export default function FeatureZigZag({ overview, features }: FeatureZigZagProps
       );
 
       gsap.fromTo(imgBlock,
-        { x: isEven ? 100 : -100, opacity: 0, scale: 0.9 },
+        { x: isEven ? 100 : -100, scale: 0.9 },
         {
           x: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out",
           scrollTrigger: {

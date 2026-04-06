@@ -27,7 +27,13 @@ import EventBookingAppDetailTemplate from './EventBookingAppDetailTemplate';
 import EscooterSharingAppTemplate from './EscooterSharingAppTemplate';
 import EscooterAppDetailTemplate from './EscooterAppDetailTemplate';
 
-export const stitchPagesMap: Record<string, React.FC> = {
+// Dynamic DB Rendering Templates
+import BlogDetailTemplate from './BlogDetailTemplate';
+import CaseStudyTemplate from './CaseStudyTemplate';
+
+export const stitchPagesMap: Record<string, React.FC<any>> = {
+  BlogDetailTemplate,
+  CaseStudyTemplate,
   'industries-we-serve': IndustriesWeServeTemplate,
   'cab-booking-app-detail': CabBookingAppDetailTemplate,
   'stock-trading-app-development': StockTradingAppDevelopmentTemplate,

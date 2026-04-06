@@ -56,16 +56,16 @@ export default function IndustriesLayout({ page }: { page: FullPage }) {
     const ctx = gsap.context(() => {
       // Hero entrance
       gsap.from('.ind-hero-title', {
-        y: 100, opacity: 0, duration: 1.4, ease: 'power4.out', delay: 0.1
+        y: 100, duration: 1.4, ease: 'power4.out', delay: 0.1
       })
       gsap.from('.ind-hero-sub', {
-        y: 60, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.4
+        y: 60, duration: 1, ease: 'power3.out', delay: 0.4
       })
       gsap.from('.ind-hero-cta', {
-        y: 40, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.7
+        y: 40, duration: 0.8, ease: 'power3.out', delay: 0.7
       })
       gsap.from('.ind-stat', {
-        y: 40, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.9
+        y: 40, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.9
       })
 
       // Marquee service tags
@@ -75,25 +75,25 @@ export default function IndustriesLayout({ page }: { page: FullPage }) {
 
       // Feature cards stagger
       gsap.from('.ind-feature', {
-        y: 80, opacity: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+        y: 80, duration: 0.7, stagger: 0.08, ease: 'power3.out',
         scrollTrigger: { trigger: '.ind-features', start: 'top 75%' }
       })
 
       // Process steps timeline draw
       gsap.from('.proc-step', {
-        x: -60, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out',
+        x: -60, duration: 0.7, stagger: 0.15, ease: 'power3.out',
         scrollTrigger: { trigger: '.proc-section', start: 'top 75%' }
       })
 
       // Global presence numbers
       gsap.from('.globe-stat', {
-        scale: 0.8, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1.7)',
+        scale: 0.8, duration: 0.6, stagger: 0.1, ease: 'back.out(1.7)',
         scrollTrigger: { trigger: '.globe-section', start: 'top 75%' }
       })
 
       // FAQs accordion items
       gsap.from('.faq-item', {
-        y: 40, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out',
+        y: 40, duration: 0.5, stagger: 0.1, ease: 'power3.out',
         scrollTrigger: { trigger: '.faq-section', start: 'top 80%' }
       })
 

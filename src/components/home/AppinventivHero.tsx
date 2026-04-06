@@ -11,12 +11,12 @@ export default function AppinventivHero() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl  = gsap.timeline({ defaults: { ease: 'power4.out' } })
-      tl.from('.hero-pill',      { y: -30, opacity: 0, duration: 0.6 })
-        .from('.hero-heading',   { y: 60, opacity: 0, duration: 1.1 }, 0.15)
-        .from('.hero-sub',       { y: 40, opacity: 0, duration: 0.9 }, 0.4)
-        .from('.hero-cta',       { y: 30, opacity: 0, duration: 0.7 }, 0.6)
-        .from('.hero-trust',     { y: 25, opacity: 0, duration: 0.7 }, 0.75)
-        .from('.hero-mockup',    { x: 80, opacity: 0, duration: 1.2 }, 0.35)
+      tl.from('.hero-pill',      { y: -30, duration: 0.6 })
+        .from('.hero-heading',   { y: 60, duration: 1.1 }, 0.15)
+        .from('.hero-sub',       { y: 40, duration: 0.9 }, 0.4)
+        .from('.hero-cta',       { y: 30, duration: 0.7 }, 0.6)
+        .from('.hero-trust',     { y: 25, duration: 0.7 }, 0.75)
+        .from('.hero-mockup',    { x: 80, duration: 1.2 }, 0.35)
     }, sectionRef)
     return () => ctx.revert()
   }, [])

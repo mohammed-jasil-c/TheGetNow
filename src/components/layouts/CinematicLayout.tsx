@@ -52,13 +52,13 @@ export default function CinematicLayout({ page }: { page: FullPage }) {
     const ctx = gsap.context(() => {
       // Parallax hero text
       gsap.to('.hero-text', {
-        y: 150, opacity: 0,
+        y: 150,
         scrollTrigger: { trigger: '.hero-section', start: 'top top', end: 'bottom top', scrub: true }
       })
 
       // Reveal features staggered
       gsap.from('.feature-card', {
-        y: 100, opacity: 0, stagger: 0.1, duration: 1, ease: 'power3.out',
+        y: 100, stagger: 0.1, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: '.features-grid', start: 'top 80%' }
       })
 

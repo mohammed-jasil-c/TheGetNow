@@ -64,7 +64,7 @@ export default function ShowcaseLayout({ page }: { page: FullPage }) {
       
       // Floating content stagger
       gsap.from('.sc-content > *', {
-        y: 40, opacity: 0, stagger: 0.1, duration: 1, ease: 'power3.out',
+        y: 40, stagger: 0.1, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: '.sc-content', start: 'top 80%' }
       })
 

@@ -113,7 +113,7 @@ export default function EnterpriseSection() {
             <div
               key={cap.number}
               className="cap-card glass-card p-8 sm:p-10 rounded-2xl relative group overflow-hidden"
-              style={{ opacity: 0, transform: 'translateY(30px)', transition: 'all 0.6s ease' }}
+              style={{ transform: 'translateY(30px)', transition: 'all 0.6s ease' }}
             >
               {/* Background gradient on hover */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: cap.gradient }} />

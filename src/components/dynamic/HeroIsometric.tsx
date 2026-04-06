@@ -17,10 +17,10 @@ export default function HeroIsometric({ title, subtitle, heroImage, gradientFrom
   useEffect(() => {
     const tl = gsap.timeline();
     tl.fromTo('[data-iso-text] > *', 
-      { x: -50, opacity: 0 }, 
+      { x: -50 }, 
       { x: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
     ).fromTo('.iso-image-container',
-      { x: 50, opacity: 0, rotationY: 25, rotationX: 10 },
+      { x: 50, rotationY: 25, rotationX: 10 },
       { x: 0, opacity: 1, rotationY: -15, rotationX: 15, duration: 1.5, ease: "power4.out" },
       "-=0.5"
     );

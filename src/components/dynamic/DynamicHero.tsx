@@ -17,7 +17,7 @@ interface DynamicHeroProps {
 export default function DynamicHero({ title, subtitle, heroImage, gradientFrom, gradientTo, techIcons, ctaText }: DynamicHeroProps) {
   useEffect(() => {
     gsap.fromTo('[data-dyn-hero] > *', 
-      { y: 50, opacity: 0 }, 
+      { y: 50 }, 
       { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power4.out" }
     )
   }, [title])

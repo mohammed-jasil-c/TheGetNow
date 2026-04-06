@@ -5,6 +5,8 @@ import type { Metadata } from 'next'
 
 interface Props { params: Promise<{ slug: string }> }
 
+export const revalidate = 0; // Disable static caching so newly seeded items render instantly
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const { data: service } = await supabaseServer

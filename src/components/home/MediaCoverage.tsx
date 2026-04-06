@@ -114,7 +114,7 @@ export default function MediaCoverage() {
             <Link key={post.title} href={`/blog/${post.slug}`} className="block">
               <article
                 className="blog-card glass-card rounded-2xl overflow-hidden group cursor-pointer h-full"
-                style={{ opacity: 0, transform: 'translateY(30px)', transition: 'all 0.6s ease' }}
+                style={{ transform: 'translateY(30px)', transition: 'all 0.6s ease' }}
               >
                 {/* Image */}
                 <div className="relative h-48 sm:h-52 overflow-hidden">

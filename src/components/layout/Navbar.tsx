@@ -122,7 +122,7 @@ export default function Navbar() {
     if (!navRef.current) return
     const ctx = gsap.context(() => {
       gsap.from(navRef.current, {
-        y: -20, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.1,
+        y: -20, duration: 0.6, ease: 'power3.out', delay: 0.1,
       })
     })
     return () => ctx.revert()

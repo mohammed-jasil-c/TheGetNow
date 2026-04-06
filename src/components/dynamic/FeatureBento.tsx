@@ -21,7 +21,7 @@ export default function FeatureBento({ overview, features }: FeatureBentoProps) 
     
     // Bento grid reveal
     gsap.fromTo(containerRef.current.children,
-      { y: 100, opacity: 0, scale: 0.95 },
+      { y: 100, scale: 0.95 },
       {
         y: 0, opacity: 1, scale: 1,
         duration: 0.8,

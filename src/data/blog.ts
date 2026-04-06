@@ -107,26 +107,36 @@ export function getBlogBySlug(slug: string): BlogPost | undefined {
 export function getBlogFallbackImage(index: number = 0): string {
   // Generic high-quality technical fallbacks
   const fallbacks = [
-    'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200\u0026auto=format\u0026fit=crop', // AI/Abstract
-    'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200\u0026auto=format\u0026fit=crop', // Network/Code
-    'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200\u0026auto=format\u0026fit=crop', // Digital/Abstract
-    'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200\u0026auto=format\u0026fit=crop', // Mobile
-    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200\u0026auto=format\u0026fit=crop', // Global/Data
-    'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200\u0026auto=format\u0026fit=crop', // Design
-    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200\u0026auto=format\u0026fit=crop', // Programming
-    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200\u0026auto=format\u0026fit=crop', // Cybersecurity
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200\u0026auto=format\u0026fit=crop', // Electronics
-    'https://images.unsplash.com/photo-1558494949-ef0109121c0b?w=1200\u0026auto=format\u0026fit=crop', // Server
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200\u0026auto=format\u0026fit=crop', // Web Dev
-    'https://images.unsplash.com/photo-1504639725597-78f6ec6b5383?w=1200\u0026auto=format\u0026fit=crop', // Coding
-    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200\u0026auto=format\u0026fit=crop', // Laptop/Dev
-    'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=1200\u0026auto=format\u0026fit=crop', // Logic
-    'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200\u0026auto=format\u0026fit=crop', // Circuit
-    'https://images.unsplash.com/photo-1519389950473-acc756fdf206?w=1200\u0026auto=format\u0026fit=crop', // Digital Team
-    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200\u0026auto=format\u0026fit=crop', // Modern Desk
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200\u0026auto=format\u0026fit=crop', // Meeting
-    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200\u0026auto=format\u0026fit=crop', // Discussion
-    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200\u0026auto=format\u0026fit=crop', // Collaboration
+    'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&auto=format&fit=crop', // AI/Abstract
+    'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=1200&auto=format&fit=crop', // Network/Code
+    'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&auto=format&fit=crop', // Digital/Abstract
+    'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&auto=format&fit=crop', // Mobile
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop', // Global/Data
+    'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&auto=format&fit=crop', // Design
+    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop', // Programming
+    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&auto=format&fit=crop', // Cybersecurity
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop', // Electronics
+    'https://images.unsplash.com/photo-1558494949-ef0109121c0b?w=1200&auto=format&fit=crop', // Server
+    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&auto=format&fit=crop', // Web Dev
+    'https://images.unsplash.com/photo-1504639725597-78f6ec6b5383?w=1200&auto=format&fit=crop', // Coding
+    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop', // Laptop/Dev
+    'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=1200&auto=format&fit=crop', // Logic
+    'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200&auto=format&fit=crop', // Circuit
+    'https://images.unsplash.com/photo-1519389950473-acc756fdf206?w=1200&auto=format&fit=crop', // Digital Team
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&auto=format&fit=crop', // Modern Desk
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop', // Meeting
+    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop', // Discussion
+    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&auto=format&fit=crop', // Collaboration
+    'https://images.unsplash.com/photo-1504313264417-3806a64483ae?w=1200&auto=format&fit=crop', // Future Tech
+    'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=1200&auto=format&fit=crop', // Remote Dev
+    'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1200&auto=format&fit=crop', // Hardware
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&auto=format&fit=crop', // Networking
+    'https://images.unsplash.com/photo-1454165833767-1229d444455b?w=1200&auto=format&fit=crop', // Analytics
+    'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?w=1200&auto=format&fit=crop', // Web Dev Detail
+    'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=1200&auto=format&fit=crop', // Design UI
+    'https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?w=1200&auto=format&fit=crop', // Abstract Blue
+    'https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&auto=format&fit=crop', // IT Professionals
+    'https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=1200&auto=format&fit=crop', // Code Screen
   ]
   return fallbacks[index % fallbacks.length]
 }

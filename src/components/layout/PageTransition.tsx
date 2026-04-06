@@ -33,7 +33,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     })
     // Show logo briefly
     .to(logoRef.current, { opacity: 1, duration: 0.1 })
-    .to(logoRef.current, { opacity: 0, duration: 0.1, delay: 0.1 })
+    .to(logoRef.current, { duration: 0.1, delay: 0.1 })
     // Slide up to reveal
     .to(curtainRef.current, {
       y: '-100%',

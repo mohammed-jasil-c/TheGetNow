@@ -21,7 +21,7 @@ export default function StatsSection() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.stats-headline', {
-        x: -80, opacity: 0, duration: 1, ease: 'power3.out',
+        x: -80, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }
       })
 
@@ -43,7 +43,7 @@ export default function StatsSection() {
         })
 
         gsap.from(el.closest('.stat-card')!, {
-          rotateY: 90, opacity: 0, duration: 0.8, delay: i * 0.1,
+          rotateY: 90, duration: 0.8, delay: i * 0.1,
           ease: 'back.out(1.4)',
           scrollTrigger: { trigger: el, start: 'top 90%' }
         })

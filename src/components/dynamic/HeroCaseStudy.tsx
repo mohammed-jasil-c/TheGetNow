@@ -29,8 +29,8 @@ export default function HeroCaseStudy({
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.case-hero-content', { y: 100, opacity: 0, duration: 1.2, ease: 'power4.out', stagger: 0.2 })
-      gsap.from('.case-hero-image', { scale: 1.2, opacity: 0, duration: 2, ease: 'power2.out' })
+      gsap.from('.case-hero-content', { y: 100, duration: 1.2, ease: 'power4.out', stagger: 0.2 })
+      gsap.from('.case-hero-image', { scale: 1.2, duration: 2, ease: 'power2.out' })
     }, containerRef)
     return () => ctx.revert()
   }, [])

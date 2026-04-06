@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useLayoutEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -86,14 +86,14 @@ export default function TechStackSection() {
   const [activeTab, setActiveTab] = useState(0)
   const [hoveredTech, setHoveredTech] = useState<string | null>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.tech-heading', {
-        y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+        y: 50, duration: 1, ease: 'power3.out',
         scrollTrigger: { trigger: '.tech-heading', start: 'top 85%' }
       })
       gsap.from('.tech-tabs', {
-        y: 30, opacity: 0, duration: 0.8, ease: 'power3.out',
+        y: 30, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: '.tech-tabs', start: 'top 88%' }
       })
     }, sectionRef)
@@ -101,17 +101,17 @@ export default function TechStackSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-28 relative overflow-hidden" style={{ background: 'var(--bg-page)' }}>
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+    <section ref={sectionRef} className="py-28 relative overflow-hidden" style={{ background: 'var(--color-bg)' }}>
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, var(--color-border-strong) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         {/* Heading */}
         <div className="text-center mb-16 tech-heading">
           <p className="section-label">Technology Stack</p>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-5" style={{ color: 'var(--text-heading)', fontFamily: 'var(--font-heading)' }}>
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-5" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>
             60+ Technologies.<br /><span className="gradient-text">Infinite Possibilities.</span>
           </h2>
-          <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
             We handpick the right tools for every project — from battle-tested enterprise stacks to cutting-edge emerging tech.
           </p>
         </div>
@@ -128,9 +128,9 @@ export default function TechStackSection() {
                   : 'hover:scale-105'
               }`}
               style={{
-                background: activeTab === i ? cat.color : 'var(--bg-card)',
-                border: `1px solid ${activeTab === i ? cat.color : 'var(--border-subtle)'}`,
-                color: activeTab === i ? '#FFFFFF' : 'var(--text-secondary)',
+                background: activeTab === i ? cat.color : 'var(--color-card)',
+                border: `1px solid ${activeTab === i ? cat.color : 'var(--color-border)'}`,
+                color: activeTab === i ? '#FFFFFF' : 'var(--color-text-secondary)',
                 boxShadow: activeTab === i ? `0 0 25px ${cat.color}40` : 'none',
               }}
             >
@@ -158,12 +158,12 @@ export default function TechStackSection() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-bold text-sm truncate" style={{ color: 'var(--text-heading)' }}>{tech.name}</h3>
+                    <h3 className="font-bold text-sm truncate" style={{ color: 'var(--color-text)' }}>{tech.name}</h3>
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0" style={{ background: `${categories[activeTab].color}15`, color: categories[activeTab].color }}>
                       {tech.years}
                     </span>
                   </div>
-                  <p className="text-xs leading-relaxed line-clamp-2 mb-2" style={{ color: 'var(--text-muted)' }}>{tech.desc}</p>
+                  <p className="text-xs leading-relaxed line-clamp-2 mb-2" style={{ color: 'var(--color-muted)' }}>{tech.desc}</p>
                   <p className="text-[10px] font-bold" style={{ color: categories[activeTab].color }}>
                     {tech.projects} projects
                   </p>
@@ -174,7 +174,7 @@ export default function TechStackSection() {
         </div>
 
         {/* Bottom stats */}
-        <div className="flex flex-wrap justify-center gap-8 mt-14 pt-10" style={{ borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="flex flex-wrap justify-center gap-8 mt-14 pt-10" style={{ borderTop: '1px solid var(--color-border)' }}>
           {[
             { val: '60+', label: 'Technologies' },
             { val: '12+', label: 'Years Average Exp.' },
@@ -183,7 +183,7 @@ export default function TechStackSection() {
           ].map(stat => (
             <div key={stat.label} className="text-center">
               <p className="text-2xl font-black font-accent gradient-text">{stat.val}</p>
-              <p className="text-xs font-semibold" style={{ color: 'var(--text-muted)' }}>{stat.label}</p>
+              <p className="text-xs font-semibold" style={{ color: 'var(--color-muted)' }}>{stat.label}</p>
             </div>
           ))}
         </div>

@@ -91,7 +91,8 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="form-input pl-10"
+                  className="form-input"
+                  style={{ paddingLeft: '2.5rem' }}
                 />
               </div>
               <button type="submit" className="glow-button px-6 py-2.5 text-sm shrink-0">

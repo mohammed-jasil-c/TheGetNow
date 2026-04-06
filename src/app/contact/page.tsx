@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { FaEnvelope, FaPhone, FaLocationDot, FaArrowRight, FaCheck, FaLinkedinIn, FaXTwitter, FaInstagram, FaGithub } from 'react-icons/fa6'
+import { FaEnvelope, FaPhone, FaLocationDot, FaArrowRight, FaCheck, FaLinkedinIn, FaXTwitter, FaInstagram, FaGithub, FaSpinner } from 'react-icons/fa6'
 import ScrollReveal from '@/components/animations/ScrollReveal'
+import { submitContactForm } from '@/app/actions/contact'
+import OrbisNftShowcase from '@/components/home/OrbisNftShowcase'
 
 const contactInfo = [
   { icon: FaEnvelope, label: 'Email Us', value: 'hello@thegetnow.com', href: 'mailto:hello@thegetnow.com' },
@@ -19,7 +21,8 @@ const socials = [
 ]
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', company: '', budget: '', service: '', message: '',
   })
@@ -28,15 +31,34 @@ export default function ContactPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setSubmitted(true)
+    setStatus('loading')
+
+    const submissionData = new FormData()
+    // Map our local state to the expected keys in submitContactForm
+    const nameParts = formData.name.trim().split(' ')
+    submissionData.append('firstName', nameParts[0] || '')
+    submissionData.append('lastName', nameParts.slice(1).join(' ') || '')
+    submissionData.append('email', formData.email)
+    submissionData.append('projectType', formData.service)
+    submissionData.append('budgetRange', formData.budget)
+    submissionData.append('description', `Company: ${formData.company}\nPhone: ${formData.phone}\n\nMessage: ${formData.message}`)
+
+    const result = await submitContactForm(submissionData)
+    
+    if (result.success) {
+      setStatus('success')
+    } else {
+      setStatus('error')
+      setErrorMsg(result.error || 'Failed to send message')
+    }
   }
 
-  if (submitted) {
+  if (status === 'success') {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: 'var(--color-bg)' }}>
-        <div className="text-center max-w-xl">
+        <div className="text-center max-w-xl animate-fade-in">
           <div className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: 'rgba(16,185,129,0.15)' }}>
             <FaCheck className="w-8 h-8 text-emerald-500" />
           </div>
@@ -164,13 +186,30 @@ export default function ContactPage() {
                 <textarea name="message" value={formData.message} onChange={handleChange} required rows={5} className="form-textarea" placeholder="Tell us about your project, goals, and timeline..." />
               </div>
 
-              <button type="submit" className="glow-button w-full justify-center text-base py-4">
-                Send Request <FaArrowRight className="w-4 h-4" />
+              {status === 'error' && (
+                <div className="flex items-center gap-2 text-rose-500 text-sm bg-rose-500/10 p-3 rounded-lg">
+                  <FaCheck className="shrink-0 rotate-45" />
+                  <span>{errorMsg}</span>
+                </div>
+              )}
+
+              <button 
+                disabled={status === 'loading'} 
+                type="submit" 
+                className="glow-button w-full justify-center text-base py-4 disabled:opacity-50"
+              >
+                {status === 'loading' ? (
+                  <><FaSpinner className="animate-spin" /> Sending...</>
+                ) : (
+                  <>Send Request <FaArrowRight className="w-4 h-4" /></>
+                )}
               </button>
             </form>
           </div>
         </div>
       </section>
+
+      <OrbisNftShowcase />
     </div>
   )
 }

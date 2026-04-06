@@ -26,14 +26,14 @@ export default function ServicesSection() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.services-title span', {
-        y: 120, opacity: 0, duration: 1, stagger: 0.12, ease: 'power4.out',
+        y: 120, duration: 1, stagger: 0.12, ease: 'power4.out',
         scrollTrigger: { trigger: '.services-title', start: 'top 80%' }
       })
 
       const cards = sectionRef.current?.querySelectorAll('.srv-card')
       cards?.forEach((card, i) => {
         gsap.from(card, {
-          y: 80, opacity: 0, duration: 0.8, delay: i * 0.06, ease: 'power3.out',
+          y: 80, duration: 0.8, delay: i * 0.06, ease: 'power3.out',
           scrollTrigger: { trigger: card, start: 'top 90%' }
         })
       })

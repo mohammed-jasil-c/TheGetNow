@@ -91,7 +91,7 @@ export default function CaseStudiesPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.cs-hero', { y: 50, opacity: 0, duration: 1, ease: 'power4.out' })
+      gsap.from('.cs-hero', { y: 50, duration: 1, ease: 'power4.out' })
     }, containerRef)
     return () => ctx.revert()
   }, [])

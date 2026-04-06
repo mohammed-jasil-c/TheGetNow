@@ -12,7 +12,7 @@ export default function DashboardLayout({ page }: { page: FullPage }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo('.dash-card',
-        { y: 30, opacity: 0 },
+        { y: 30 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.2 }
       )
       gsap.fromTo('.mock-bar',

@@ -22,11 +22,11 @@ export default function TestimonialsSection() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.testi-content', {
-        y: 100, opacity: 0, duration: 1.2, ease: 'expo.out',
+        y: 100, duration: 1.2, ease: 'expo.out',
         scrollTrigger: { trigger: '.testi-content', start: 'top 85%' }
       })
       gsap.from('.testi-card', {
-        x: 80, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
+        x: 80, duration: 0.8, stagger: 0.15, ease: 'power3.out',
         scrollTrigger: { trigger: '.testi-grid', start: 'top 80%' }
       })
     }, sectionRef)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useLayoutEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -17,15 +17,15 @@ const steps = [
 export default function ProcessSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       steps.forEach((_, i) => {
         gsap.from(`.proc-row-${i}`, {
-          x: 120, opacity: 0, duration: 0.9, ease: 'power3.out',
+          x: 120, duration: 0.9, ease: 'power3.out',
           scrollTrigger: { trigger: `.proc-row-${i}`, start: 'top 88%' }
         })
         gsap.from(`.proc-num-${i}`, {
-          scale: 0, rotation: -90, opacity: 0, duration: 0.6, ease: 'back.out(2)',
+          scale: 0, rotation: -90, duration: 0.6, ease: 'back.out(2)',
           scrollTrigger: { trigger: `.proc-row-${i}`, start: 'top 88%' }
         })
         if (i < steps.length - 1) {
@@ -40,13 +40,13 @@ export default function ProcessSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-32 px-6 md:px-16 lg:px-32 relative overflow-hidden" style={{ background: 'var(--bg-page)' }}>
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: `radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px)`, backgroundSize: '28px 28px' }} />
+    <section ref={sectionRef} className="py-32 px-6 md:px-16 lg:px-32 relative overflow-hidden" style={{ background: 'var(--color-bg)' }}>
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: `radial-gradient(circle, var(--color-border-strong) 1px, transparent 1px)`, backgroundSize: '28px 28px' }} />
 
       <div className="max-w-[1400px] mx-auto relative z-10">
         <div className="mb-24 overflow-hidden">
           <p className="section-label">How We Work</p>
-          <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight" style={{ color: 'var(--text-heading)', fontFamily: 'var(--font-heading)' }}>
+          <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>
             Our battle-tested<br />
             <span className="gradient-text">process.</span>
           </h2>
@@ -70,7 +70,7 @@ export default function ProcessSection() {
                 <div className="flex items-start justify-between gap-8 flex-wrap">
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-extrabold mb-4" style={{ color: step.color, fontFamily: 'var(--font-heading)' }}>{step.title}</h3>
-                    <p className="leading-relaxed max-w-2xl text-lg mb-4" style={{ color: 'var(--text-secondary)' }}>{step.desc}</p>
+                    <p className="leading-relaxed max-w-2xl text-lg mb-4" style={{ color: 'var(--color-text-secondary)' }}>{step.desc}</p>
                     <div className="flex flex-wrap gap-2">
                       {step.deliverables.map(d => (
                         <span key={d} className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: `${step.color}10`, color: step.color, border: `1px solid ${step.color}20` }}>

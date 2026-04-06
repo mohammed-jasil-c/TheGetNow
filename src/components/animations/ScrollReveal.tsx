@@ -39,7 +39,6 @@ export default function ScrollReveal({
         {
           y,
           x,
-          opacity: 0,
         },
         {
           y: 0,
