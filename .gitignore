@@ -43,3 +43,22 @@ next-env.d.ts
 # logs and temp
 build.log
 *.txt
+*.log
+
+# testsprite
+.testsprite
+/testsprite_tests/
+testsprite_out.*
+testsprite_tests_output.*
+
+# draft & temp files
+draft_prd*.md
+build_check.log
+docs-list.txt
+eslint.json
+stitch_*.html
+
+# one-off scripts (not needed in prod)
+generate-db.js
+insert-stitch-pages.ts
+portfolio-update.ts
