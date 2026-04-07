@@ -35,7 +35,7 @@ export default function FloatingWidgets() {
     <>
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/919463407140?text=Hi%2C%20I%27d%20like%20to%20discuss%20a%20project"
+        href="https://wa.me/6282424075?text=Hi%2C%20I%27d%20like%20to%20discuss%20a%20project"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 group"

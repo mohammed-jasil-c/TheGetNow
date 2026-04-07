@@ -165,7 +165,7 @@ export default function Navbar() {
               +1 (628) 432-7890
             </a>
             <span className="hidden md:inline text-white/30">|</span>
-            <a href="https://wa.me/919463407140" target="_blank" rel="noopener" className="hidden md:flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+            <a href="https://wa.me/6282424075" target="_blank" rel="noopener" className="hidden md:flex items-center gap-1.5 hover:opacity-80 transition-opacity">
               <i className="fa-brands fa-whatsapp text-sm" />
               WhatsApp
             </a>
@@ -424,7 +424,7 @@ export default function Navbar() {
                 <i className="fa-solid fa-rocket" /> Start Your Project
               </Link>
               <a
-                href="https://wa.me/919463407140"
+                href="https://wa.me/6282424075"
                 target="_blank"
                 rel="noopener"
                 className="outline-button justify-center text-base py-4"

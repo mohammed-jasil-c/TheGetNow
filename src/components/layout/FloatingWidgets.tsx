@@ -15,7 +15,7 @@ export default function FloatingWidgets() {
 
   return (
     <a
-      href="https://wa.me/919463407140"
+      href="https://wa.me/6282424075"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
